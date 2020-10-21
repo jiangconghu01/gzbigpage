@@ -1,18 +1,20 @@
 <template>
   <div id="nav">
-    <img src="./assets/page_back_hd.jpg" class="bk" />
     <pageContainerBox :config="{ width: 1920, height: 1080, isfix: false }">
-      <router-view />
+      <pageCommonHeader></pageCommonHeader>
+      <router-view class="router-page" />
     </pageContainerBox>
   </div>
 </template>
 <script lang="ts">
 import pageContainerBox from './components/pageContainerBox.vue'
+import pageCommonHeader from './components/pageCommonHeader.vue'
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name: '',
+  name: 'app',
   components: {
-    pageContainerBox
+    pageContainerBox,
+    pageCommonHeader
   },
   setup() {
     return {}
@@ -29,6 +31,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  color: #fff;
   //   background-image: url('./assets/page_back_hd.jpg');
   //   background-repeat: no-repeat;
   //   background-size: cover;
@@ -41,6 +44,11 @@ body {
     position: absolute;
     left: 0;
     top: 0;
+    z-index: -1;
+  }
+  .router-page {
+    height: 990px;
+    margin: 35px 30px 25px 30px;
   }
 }
 </style>

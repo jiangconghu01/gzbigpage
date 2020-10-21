@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import store from '@/store/index'
 import Home from '../views/Home.vue'
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,5 +26,9 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+router.beforeEach((to, from, next) => {
+  store.commit('setCurrentPage', to.name)
+  next()
 })
 export default router

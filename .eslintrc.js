@@ -17,6 +17,8 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/no-var-requires":"warn",
-    "vue/no-unused-components":"warn"
+    "vue/no-unused-components":"warn",
+    "vue/no-v-model-argument":"off",
+    "@typescript-eslint/camelcase":"warn"
   }
 };

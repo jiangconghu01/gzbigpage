@@ -1,5 +1,6 @@
 <template>
   <div class="page-container-box" :class="[isfix ? 'isfix' : '']" ref="pagebox">
+    <img src="../assets/page_back_hd.jpg" class="bk" />
     <slot></slot>
   </div>
 </template>
@@ -32,8 +33,8 @@ export default defineComponent({
         pageWidth = window.screen.width
         pageHeight = window.screen.height
       }
-      pagebox.value.style.width = `${pageWidth}px`
-      pagebox.value.style.height = `${pageHeight}px`
+      pagebox.value && (pagebox.value.style.width = `${pageWidth}px`)
+      pagebox.value && (pagebox.value.style.height = `${pageHeight}px`)
     }
     const setScale = () => {
       const currentWidth = document.body.clientWidth
@@ -73,7 +74,7 @@ export default defineComponent({
   //   background-image: linear-gradient(90deg, rgba(125, 186, 243, 0.075) 2px, transparent 0), linear-gradient(rgba(121, 183, 241, 0.075) 2px, transparent 0);
   //   background-size: 35px 35px;
   &.isfix {
-    position: unset;
+    position: relative;
     // background-image: linear-gradient(90deg, #0e2251 0%, #1b437b 25%, #2e6ca7 50%, #1b437b 75%, #0e2251 100%);
     // background-size: unset;
   }
