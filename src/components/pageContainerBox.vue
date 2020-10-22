@@ -25,7 +25,7 @@ export default defineComponent({
     const isfix = ref(props.config.isfix)
     let pageWidth: number
     let pageHeight: number
-    const initPage = () => {
+    const initPage: () => void = () => {
       if (props.config.width && props.config.height) {
         pageWidth = props.config.width
         pageHeight = props.config.height
@@ -36,14 +36,14 @@ export default defineComponent({
       pagebox.value && (pagebox.value.style.width = `${pageWidth}px`)
       pagebox.value && (pagebox.value.style.height = `${pageHeight}px`)
     }
-    const setScale = () => {
+    const setScale: () => void = () => {
       const currentWidth = document.body.clientWidth
       const currentHeight = document.body.clientHeight
       const wScale = currentWidth / pageWidth
       const hScale = currentHeight / pageHeight
       !props.config.isfix && pagebox.value && (pagebox.value.style.transform = `scale(${wScale}, ${hScale})`)
     }
-    const updatePage = () => {
+    const updatePage: () => void = () => {
       window.addEventListener('resize', setScale)
     }
     onMounted(() => {

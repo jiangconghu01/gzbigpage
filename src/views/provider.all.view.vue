@@ -1,28 +1,34 @@
 <template>
   <div class="provider-allview">
-    <div class="left-top frame-back-box"></div>
-    <div class="left-bottom frame-back-box"></div>
+    <div class="left-top frame-back-box">
+      <h2 class="chart-title">供应商业务类型情况统计图</h2>
+      <div class="chart-box" id=""></div>
+    </div>
+    <div class="left-bottom frame-back-box">
+      <h2 class="chart-title">供应商行业类型情况统计图</h2>
+      <div class="chart-box" id=""></div>
+    </div>
     <div class="center-list">
       <ul>
         <li class="item">
           <p class="text"><i>供应商总数</i> <i>需关注供应商</i></p>
           <p class="number">
             <span class="lum-1"><i class="num">120</i><i class="unit">个</i></span>
-            <span class="lum-2 active"><i class="num">120</i><i class="unit">个</i></span>
+            <span class="lum-2 active" @click="showModalTable('provider_num')"><i class="num">120</i><i class="unit">个</i></span>
           </p>
         </li>
         <li class="item">
           <p class="text"><i>新签合同额</i> <i>需关注合同</i></p>
           <p class="number">
             <span class="lum-1"><i class="num">638</i><i class="unit">万</i></span>
-            <span class="lum-2 active"><i class="num">2</i><i class="unit">个</i></span>
+            <span class="lum-2 active" @click="showModalTable('contract_num')"><i class="num">2</i><i class="unit">个</i></span>
           </p>
         </li>
         <li class="item">
           <p class="text"><i>列账总额</i> <i>需关注列账数</i></p>
           <p class="number">
             <span class="lum-1"><i class="num">4201</i><i class="unit">万</i></span>
-            <span class="lum-2 active"><i class="num">264</i><i class="unit">万</i></span>
+            <span class="lum-2 active" @click="showModalTable('bill_num')"><i class="num">264</i><i class="unit">万</i></span>
           </p>
         </li>
         <li class="item">
@@ -35,23 +41,49 @@
       </ul>
     </div>
     <div class="center-map"></div>
-    <div class="center-bottom frame-back-box"></div>
-    <div class="right-top frame-back-box"></div>
-    <div class="right-bottom frame-back-box"></div>
+    <div class="center-bottom frame-back-box">
+      <h2 class="chart-title">列账采购方式统计图</h2>
+      <div class="chart-box" id=""></div>
+    </div>
+    <div class="right-top frame-back-box">
+      <h2 class="chart-title">重点供应商在整个公司的占比堆积图</h2>
+      <div class="chart-box" id=""></div>
+    </div>
+    <div class="right-bottom frame-back-box">
+      <h2 class="chart-title">列账趋势分析图</h2>
+      <div class="chart-box" id=""></div>
+    </div>
+    <userModalTable :isShowTabe="showTable" :type="tableType" @change="showStatusChange"></userModalTable>
   </div>
 </template>
 
-<script>
-// import HelloWorld from '../components/allview/userChartLabel.vue'
-import userChartLabel from '@/components/allview/userChartLabel.vue'
-import { defineComponent } from 'vue'
+<script lang="ts">
+import userModalTable from '../components/allview/userModalTable.vue'
+import { defineComponent, ref } from 'vue'
+import { OneArgVoidFun } from '../utils/commFun'
 export default defineComponent({
   name: 'providerAllView',
   components: {
-    // userChartLabel
+    userModalTable
   },
   setup() {
-    return {}
+    //显示弹框内容，业务写在弹框的业务组件里
+    const showTable = ref(false)
+    const tableType = ref('')
+    const showModalTable: OneArgVoidFun<string> = (type) => {
+      console.log(type, showTable.value)
+      tableType.value = type
+      showTable.value = true
+    }
+    const showStatusChange: OneArgVoidFun<boolean> = (val) => {
+      showTable.value = val
+    }
+    return {
+      showTable,
+      tableType,
+      showModalTable,
+      showStatusChange
+    }
   }
 })
 </script>

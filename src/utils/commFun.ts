@@ -42,3 +42,4 @@ export function getFormatDate(): TypeDateDay {
   const week = weeks[wk]
   return { date: year + '年' + month + '月' + day + '日 ', week, time: hours + ':' + minutes + ':' + seconds }
 }
+export type OneArgVoidFun<T> = (arg: T) => void

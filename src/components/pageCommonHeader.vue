@@ -20,7 +20,7 @@
       </a-select>
     </div>
     <div class="center-title">
-      <h1>贵州省电信管会系统-供应商{{ titleText }}情况</h1>
+      <h1 @click="changePage">贵州省电信管会系统-供应商{{ titleText }}情况</h1>
     </div>
     <div class="right-date">
       <i>{{ rightDate }}</i>
@@ -32,8 +32,10 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, computed, onMounted, onUnmounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { CaretDownFilled } from '@ant-design/icons-vue'
 import { getFormatDate } from '../utils/commFun'
+import { OneArgVoidFun } from '../utils/commFun'
 import store from '../store/index'
 import moment from 'moment'
 import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
@@ -52,25 +54,24 @@ export default defineComponent({
     const dateFmater: dateFmater = 'YYYY/MM'
     const curDate = new Date()
     const defDate = curDate.getFullYear() + '/' + (curDate.getMonth() + 1)
-    const handleDateChange = (value: string) => {
+    const handleDateChange: OneArgVoidFun<string> = (value) => {
       console.log(value)
     }
-
     //城市选择
     const cityValue = ref('')
-    const handleCityChange = (value: string) => {
+    const handleCityChange: OneArgVoidFun<string> = (value) => {
       console.log(value, cityValue.value)
     }
     //类型选择
     const typeValue = ref('1')
-    const handleTypeChange = (value: string) => {
+    const handleTypeChange: OneArgVoidFun<string> = (value) => {
       console.log(value)
     }
     //当前时间显示
     const rightDate = ref('')
     const rightTime = ref('')
     const rightWeek = ref('')
-    const updateDate = () => {
+    const updateDate: () => void = () => {
       rightDate.value = getFormatDate().date
       rightTime.value = getFormatDate().time
       rightWeek.value = getFormatDate().week
@@ -83,7 +84,7 @@ export default defineComponent({
     onUnmounted(() => {
       window.clearInterval(timer)
     })
-    //标题
+    //标题设置
     type Dictionary<T> = { [key: string]: T }
     const Titles: Dictionary<string> = {
       allview: '整体',
@@ -94,6 +95,15 @@ export default defineComponent({
     const titleText = computed(() => {
       return Titles[currntPage.value]
     })
+    //点击标题切换路由
+    const router = useRouter()
+    const route = useRoute()
+    const changePage: () => void = () => {
+      const routelist: string[] = Object.keys(Titles)
+      const currentIndex: number = routelist.indexOf(route.name as string)
+      const toPage: string = currentIndex + 1 > 2 ? routelist[0] : routelist[currentIndex + 1]
+      router.push({ name: toPage })
+    }
     return {
       dateValue,
       cityValue,
@@ -108,7 +118,8 @@ export default defineComponent({
       rightDate,
       rightTime,
       rightWeek,
-      titleText
+      titleText,
+      changePage
     }
   }
 })
@@ -132,6 +143,7 @@ export default defineComponent({
     margin-top: 30px;
     h1 {
       color: rgb(0, 183, 255);
+      cursor: pointer;
       //   color: #4cefff;4cefff
       //   color: #fff;
       //   font-family: Georgia;

@@ -1,11 +1,11 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw, RouteLocationNormalized, NavigationGuardNext, Router } from 'vue-router'
 import store from '@/store/index'
-import Home from '../views/Home.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    redirect: '/allview'
   },
   {
     path: '/allview',
@@ -23,11 +23,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/provider.detail.view.vue')
   }
 ]
-const router = createRouter({
+const router: Router = createRouter({
   history: createWebHashHistory(),
   routes
 })
-router.beforeEach((to, from, next) => {
+router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   store.commit('setCurrentPage', to.name)
   next()
 })
