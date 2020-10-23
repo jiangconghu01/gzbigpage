@@ -2,11 +2,11 @@
   <div class="provider-allview">
     <div class="left-top frame-back-box">
       <h2 class="chart-title">供应商业务类型情况统计图</h2>
-      <div class="chart-box" id=""></div>
+      <div class="chart-box" id="all-view-left-top"></div>
     </div>
     <div class="left-bottom frame-back-box">
       <h2 class="chart-title">供应商行业类型情况统计图</h2>
-      <div class="chart-box" id=""></div>
+      <div class="chart-box" id="all-view-left-bottom"></div>
     </div>
     <div class="center-list">
       <ul>
@@ -40,18 +40,18 @@
         </li>
       </ul>
     </div>
-    <div class="center-map"></div>
+    <div class="center-map" id="all-view-center-map"></div>
     <div class="center-bottom frame-back-box">
       <h2 class="chart-title">列账采购方式统计图</h2>
-      <div class="chart-box" id=""></div>
+      <div class="chart-box" id="all-view-center-bottom"></div>
     </div>
     <div class="right-top frame-back-box">
       <h2 class="chart-title">重点供应商在整个公司的占比堆积图</h2>
-      <div class="chart-box" id=""></div>
+      <div class="chart-box" id="all-view-right-top"></div>
     </div>
     <div class="right-bottom frame-back-box">
       <h2 class="chart-title">列账趋势分析图</h2>
-      <div class="chart-box" id=""></div>
+      <div class="chart-box" id="all-view-right-bottom"></div>
     </div>
     <userModalTable :isShowTabe="showTable" :type="tableType" @change="showStatusChange"></userModalTable>
   </div>
@@ -59,14 +59,19 @@
 
 <script lang="ts">
 import userModalTable from '../components/allview/userModalTable.vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import { OneArgVoidFun } from '../utils/commFun'
+import echarts from 'echarts'
+import mapConfig from '../chartconfig/map'
+import inintCharts from '../chartconfig/installchart'
+// import gzMapJson from 'echarts/map/json/province/guizhou.json'
+const gzMapJson = require('echarts/map/json/province/guizhou.json')
 export default defineComponent({
   name: 'providerAllView',
   components: {
     userModalTable
   },
-  setup() {
+  setup(props, context) {
     //显示弹框内容，业务写在弹框的业务组件里
     const showTable = ref(false)
     const tableType = ref('')
@@ -78,6 +83,17 @@ export default defineComponent({
     const showStatusChange: OneArgVoidFun<boolean> = (val) => {
       showTable.value = val
     }
+    //注册地图
+    const regiseterMap: () => void = () => {
+      echarts.registerMap('guizhou', gzMapJson)
+      const mapBox = echarts.init(document.getElementById('all-view-center-map') as HTMLCanvasElement)
+      mapBox.setOption(mapConfig)
+    }
+    onMounted(() => {
+      regiseterMap()
+    })
+    //挂载图表
+    inintCharts('providerAllView')
     return {
       showTable,
       tableType,

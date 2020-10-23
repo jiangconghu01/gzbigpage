@@ -14,25 +14,25 @@
     <div class="container center-box">
       <div class="center-left frame-back-box">
         <h2 class="chart-title">近3年采购来源渠道分析图</h2>
-        <div class="chart-box" id=""></div>
+        <div class="chart-box" id="detail-view-top-left"></div>
       </div>
       <div class="center-center frame-back-box">
         <h2 class="chart-title">综合指标得分情况（满分100）</h2>
-        <div class="chart-box" id=""></div>
+        <div class="chart-box" id="detail-view-top-center"></div>
       </div>
       <div class="center-right frame-back-box">
         <h2 class="chart-title">关键指标雷达图</h2>
-        <div class="chart-box" id=""></div>
+        <div class="chart-box" id="detail-view-top-right"></div>
       </div>
     </div>
     <div class="container bottom-box">
       <div class="bottom-left frame-back-box">
         <h2 class="chart-title">账龄金额统计分析图</h2>
-        <div class="chart-box" id=""></div>
+        <div class="chart-box" id="detail-view-bottom-left"></div>
       </div>
       <div class="bottom-right frame-back-box">
         <h2 class="chart-title">全年度列账与付款情况分析</h2>
-        <div class="chart-box" id=""></div>
+        <div class="chart-box" id="detail-view-bottom-right"></div>
       </div>
     </div>
   </div>
@@ -40,11 +40,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import inintCharts from '../chartconfig/installchart'
 export default defineComponent({
   name: '',
   setup() {
     const thTexts: string[] = ['供应商编码', '供应商名称', '法人代表', '注册资本（万）', '实缴资本（万）', '资本差异（%）', '信用信息', '法律纠纷（次）', '不良记录（笔）']
     const data: number[] = Array.from({ length: 9 }, (v, k) => k)
+    //挂载图表
+    inintCharts('providerDetailView')
     return {
       thTexts,
       data
