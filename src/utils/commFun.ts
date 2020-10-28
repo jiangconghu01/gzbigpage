@@ -44,7 +44,11 @@ export function getFormatDate(): TypeDateDay {
 }
 export type OneArgVoidFun<T> = (arg: T) => void
 
-//获取参数
+//图1获取参数
+// dates 时间数组
+// cityCodeArr 城市编码数组
+// encodeArray 指标编码数组
+// type 类型
 export function getDatesParams(dates: string[], cityCodeArr: string[], encodeArray: string[], type: string): string {
   let paramStr = '['
   for (let k = 0; k < dates.length; k++) {
@@ -54,6 +58,30 @@ export function getDatesParams(dates: string[], cityCodeArr: string[], encodeArr
       for (let i = 0, len2 = encodeArray.length; i < len2; i++) {
         const ele = encodeArray[i]
         paramStr += '{"idxCde":"' + ele + '","chnlType":"' + type + '","accountCode":"' + element + '","periodDate":"' + date + '","rptType":"1' + '"},'
+      }
+    }
+  }
+  paramStr = paramStr.substring(0, paramStr.length - 1)
+  return paramStr + ']'
+}
+//图2,3获取参数
+// dates 时间数组
+// cityCodeArr 城市编码数组
+// encodeArray 指标编码数组
+// type 类型
+//供应商编码数组
+export function getDatesParamsNew(dates: string[], cityCodeArr: string[], encodeArray: string[], providers: string[], type: string): string {
+  let paramStr = '['
+  for (let k = 0; k < dates.length; k++) {
+    const date = dates[k]
+    for (let index = 0, len = cityCodeArr.length; index < len; index++) {
+      const element = cityCodeArr[index]
+      for (let i = 0, len2 = encodeArray.length; i < len2; i++) {
+        const ele = encodeArray[i]
+        for (let index = 0; index < providers.length; index++) {
+          const provider = providers[index]
+          paramStr += '{"idxCde":"' + ele + '","ywlx":"' + type + '","accountCode":"' + element + '","monthId":"' + date + '","gysbm":"' + provider + '"},'
+        }
       }
     }
   }
