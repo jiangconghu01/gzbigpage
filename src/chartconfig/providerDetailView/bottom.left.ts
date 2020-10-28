@@ -1,0 +1,54 @@
+const option = {
+  color: ['#16D4D2'],
+  xAxis: {
+    axisTick: {
+      show: true,
+      alignWithLabel: true,
+      lineStyle: {
+        color: '#388DD3'
+      }
+    },
+    axisLabel: {
+      textStyle: {
+        color: '#388DD3'
+      },
+    },
+    axisLine: {
+      lineStyle: {
+        color: '#183888',
+      }
+    },
+    data: ["0-3个月", "3-6个月", "6-12个月", "12个月以上"]
+  },
+  yAxis: {
+    name: '单位：万元',
+    axisTick: {
+      lineStyle: {
+        width: 2,
+        color: '#398FD1'
+      }
+    },
+    axisLabel: {
+      textStyle: {
+        color: '#398FD1'
+      }
+    },
+    splitLine: {
+      lineStyle: {
+        color: '#183888'
+      }
+    },
+    axisLine: { //坐标轴轴线相关设置。数学上的x轴
+      show: false,
+      lineStyle: {
+        color: '#C9EFFA',
+      }
+    },
+  },
+  series: [{
+    type: 'bar',
+    barWidth: '18%',
+    data: [2.5, 5.5, 4.7, 1.7]
+  }]
+}
+export default option

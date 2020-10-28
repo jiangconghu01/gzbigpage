@@ -11,12 +11,9 @@ const option = {
       fontFamily: 'PingFangSC-Regular,PingFang SC;'
     }
   },
-  color: ['#F2DA32', '#16D4D2', '#AD6BE7'],
+  color: ['#D55CE7','#6B51FE','#E85089','#AD6BE7','#F5952F','#58ABF1','#F2DA32','#16D4D2'],
   tooltip: {
     trigger: 'item',
-    textStyle: {
-      fontSize: 14
-  },
     formatter: '{a} <br/>{b} : {c} ({d}%)'
   },
   series: [
@@ -25,7 +22,6 @@ const option = {
       type: 'pie',
       radius: [70, 150],
       center: ['50%', '50%'],
-      roseType: 'radius',
       label: {
         show: true,
         formatter: '{d}%'
@@ -37,16 +33,36 @@ const option = {
       },
       data: [
         {
-          value: 47.59,
+          value: 4.37,
           name: 'rose1'
         },
         {
-          value: 32.41,
+          value: 1.46,
           name: 'rose2'
         },
         {
-          value: 20,
+          value: 12.5,
           name: 'rose3'
+        },
+        {
+          value: 14.58,
+          name: 'rose4'
+        },
+        {
+          value: 15.00,
+          name: 'rose5'
+        },
+        {
+          value: 19.38,
+          name: 'rose6'
+        },
+        {
+          value: 16.67,
+          name: 'rose7'
+        },
+        {
+          value: 16.04,
+          name: 'rose8'
         }
       ]
     },
