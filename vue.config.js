@@ -36,7 +36,14 @@ module.exports = {
     compress: true,
     // hot: true,
     host: '0.0.0.0',
-    port: 9001
+    port: 9001,
+    proxy: {
+      '/czxt/': {
+        target: 'http://qqyifeng.cn',
+        changeOrigin: true
+        // pathRewrite: { '^/cpms/mnpl': '' }
+      }
+    }
   }
   //   pluginOptions: {
   //     'style-resources-loader': {
