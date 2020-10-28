@@ -1,89 +1,99 @@
 const option = {
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'shadow'
-    }
+  grid: {
+    top: '12%',
+    left: '1%',
+    right: '1%',
+    bottom: '8%',
+    containLabel: true,
   },
   legend: {
-    data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎', '百度', '谷歌', '必应', '其他']
+    itemGap: 20,
+    right: '20%',
+    top: '2%',
+    textStyle: {
+      color: '#C7EBF9',
+      fontSize: 14
+    },
+    itemWidth: 15,
+    itemHeight: 15,
+    data: ['法律诉讼', '经营异常', '行政处罚'],
   },
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  xAxis: [
-    {
-      type: 'category',
-      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  series: [
-    {
-      name: '直接访问',
-      type: 'bar',
-      data: [320, 332, 301, 334, 390, 330, 320]
+  xAxis: [{
+    axisLabel: {
+      color: '#398FD1'
     },
-    {
-      name: '邮件营销',
-      type: 'bar',
-      stack: '广告',
-      data: [120, 132, 101, 134, 90, 230, 210]
-    },
-    {
-      name: '联盟广告',
-      type: 'bar',
-      stack: '广告',
-      data: [220, 182, 191, 234, 290, 330, 310]
-    },
-    {
-      name: '视频广告',
-      type: 'bar',
-      stack: '广告',
-      data: [150, 232, 201, 154, 190, 330, 410]
-    },
-    {
-      name: '搜索引擎',
-      type: 'bar',
-      data: [862, 1018, 964, 1026, 1679, 1600, 1570],
-      markLine: {
-        lineStyle: {
-          type: 'dashed'
-        },
-        data: [[{ type: 'min' }, { type: 'max' }]]
+    axisLine: {
+      lineStyle: {
+        color: '#183888',
       }
     },
-    {
-      name: '百度',
-      type: 'bar',
-      barWidth: 5,
-      stack: '搜索引擎',
-      data: [620, 732, 701, 734, 1090, 1130, 1120]
+    axisTick: {
+      alignWithLabel: true,
+      lineStyle: {
+        width: 2,
+        color: '#398FD1'
+      }
     },
-    {
-      name: '谷歌',
-      type: 'bar',
-      stack: '搜索引擎',
-      data: [120, 132, 101, 134, 290, 230, 220]
+    splitLine: {
+      lineStyle: {
+        color: '#183888'
+      }
     },
-    {
-      name: '必应',
-      type: 'bar',
-      stack: '搜索引擎',
-      data: [60, 72, 71, 74, 190, 130, 110]
+    data: ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月'],
+  }],
+  yAxis: {
+    axisTick: {
+      show: false
     },
+    axisLabel: {
+      textStyle: {
+        color: '#398FD1'
+      }
+    },
+    splitLine: {
+      lineStyle: {
+        color: '#183688'
+      }
+    },
+    axisLine: { //坐标轴轴线相关设置。数学上的x轴
+      show: false,
+    },
+  },
+  series: [
     {
-      name: '其他',
+      name: '法律诉讼',
       type: 'bar',
-      stack: '搜索引擎',
-      data: [62, 82, 91, 84, 109, 110, 120]
+      barWidth: 20,
+      barGap: '0%',
+      color: '#16D4D2',
+      itemStyle: {
+        normal: {
+          barBorderRadius: 3,
+        }
+      },
+      data: [370, 250, 180, 320, 340, 220, 550, 370, 250, 180, 320, 340]
+    }, {
+      name: '经营异常',
+      type: 'bar',
+      barWidth: 20,
+      color: '#F2DA32',
+      itemStyle: {
+        normal: {
+          barBorderRadius: 3,
+        }
+      },
+      data: [160, 320, 120, 160, 350, 240, 440, 160, 320, 120, 160, 350]
+    }, {
+      name: '行政处罚',
+      type: 'bar',
+      barWidth: 20,
+      color: '#E85089',
+      itemStyle: {
+        normal: {
+          barBorderRadius: 3,
+        }
+      },
+      data: [160, 320, 120, 160, 350, 240, 440, 160, 320, 120, 160, 350]
     }
   ]
 }
