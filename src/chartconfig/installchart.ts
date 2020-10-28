@@ -2,16 +2,17 @@ import option1 from './providerAllView/left.top.pie'
 import option2 from './providerKeypointView/top.right.bar'
 import { onMounted } from 'vue'
 import echarts from 'echarts'
-interface PageView<T> {
+
+export interface PageView<T> {
   child: T
   page?: string
   title?: string
 }
-type PageName = 'providerAllView' | 'providerDetailView' | 'providerKeypointView'
+export type PageName = 'providerAllView' | 'providerDetailView' | 'providerKeypointView'
 interface FuncPstringVoid {
   (page: PageName): void
 }
-const pageChartsConfig: Record<PageName, PageView<Record<string, any>>> = {
+export const pageChartsConfig: Record<PageName, PageView<Record<string, any>>> = {
   providerAllView: {
     child: {
       'all-view-left-top': option1,
@@ -47,7 +48,7 @@ const inintCharts: FuncPstringVoid = (page: PageName) => {
   const currentPage = pageChartsConfig[page]['child']
   onMounted(() => {
     Object.keys(currentPage).forEach((val: string) => {
-      const box = echarts.init(document.getElementById(val) as HTMLCanvasElement)
+      const box = echarts.init(document.getElementById(val) as HTMLDivElement)
       currentPage[val] && box.setOption(currentPage[val])
     })
   })

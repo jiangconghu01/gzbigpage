@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import userModalTable from '../components/allview/userModalTable.vue'
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { OneArgVoidFun } from '../utils/commFun'
 import echarts from 'echarts'
 import mapConfig from '../chartconfig/map'
@@ -90,6 +90,9 @@ export default defineComponent({
       mapBox.setOption(mapConfig)
     }
     onMounted(() => {
+      const instance = getCurrentInstance() as ComponentInternalInstance
+      const a = instance.appContext.config.globalProperties
+      console.log(a)
       regiseterMap()
     })
     //挂载图表

@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, computed, onMounted, onUnmounted } from 'vue'
+import { defineComponent, ref, watch, computed, onMounted, onUnmounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { CaretDownFilled } from '@ant-design/icons-vue'
 import { getFormatDate } from '../utils/commFun'
@@ -42,6 +42,7 @@ import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
 type dateFmater = 'YYYY/MM' | 'YYYY/MM/DD'
+import updateProviderAllView from '../chartconfig/providerAllView/update.page.chart'
 export default defineComponent({
   name: 'pageCommonHeader',
   components: {
@@ -53,7 +54,7 @@ export default defineComponent({
     const zhLocale = ref<Record<string, any>>(locale)
     const dateFmater: dateFmater = 'YYYY/MM'
     const curDate = new Date()
-    const defDate = curDate.getFullYear() + '/' + (curDate.getMonth() + 1)
+    const defDate = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '/12' : curDate.getFullYear() + '/' + curDate.getMonth()
     const handleDateChange: OneArgVoidFun<string> = (value) => {
       console.log(value)
     }
@@ -80,6 +81,9 @@ export default defineComponent({
     onMounted(() => {
       timer = window.setInterval(updateDate, 1000)
       console.log(zhLocale)
+      const instance = getCurrentInstance() as ComponentInternalInstance //vue的this实例
+      const _this = instance.appContext.config.globalProperties //全局对象属性
+      updateProviderAllView(_this)
     })
     onUnmounted(() => {
       window.clearInterval(timer)
