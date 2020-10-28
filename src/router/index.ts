@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw, RouteLocationNormalized, NavigationGuardNext, Router } from 'vue-router'
 import store from '@/store/index'
+import { requestPostData } from '../http/http'
+import qs from 'qs'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,7 +29,15 @@ const router: Router = createRouter({
   history: createWebHashHistory(),
   routes
 })
-router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+  debugger
+  if (process.env.NODE_ENV === 'development' && to.name === 'Home') {
+    try {
+      const a = await requestPostData('/login', qs.stringify({ account: 10000, sct: 'c4ca4238a0b923820dcc509a6f75849b', yzm: '' }))
+    } catch (error) {
+      console.log(error)
+    }
+  }
   store.commit('setCurrentPage', to.name)
   next()
 })

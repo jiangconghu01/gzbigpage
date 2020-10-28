@@ -55,7 +55,8 @@ export default defineComponent({
     const zhLocale = ref<Record<string, any>>(locale)
     const dateFmater: dateFmater = 'YYYYMM'
     const curDate = new Date()
-    const defDate = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '/12' : curDate.getFullYear() + '/' + curDate.getMonth()
+    const defDate =
+      curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? curDate.getMonth() + 1 + '' : '0' + (curDate.getMonth() + 1)) + curDate.getMonth()
     const handleDateChange: OneArgVoidFun<moment.Moment> = (value: moment.Moment) => {
       const sdate = value.format('YYYYMM')
       console.log(value)
@@ -122,10 +123,15 @@ export default defineComponent({
     const storePage: ComputedRef<string> = computed(() => store.state.currntPage)
     watch<ComputedRef<string>[], false>([storeDate, storeType, storeCity, storePage], ([c_d, c_t, c_c, c_p]) => {
       store.commit('setIsLoading', true)
-      const currntPage = c_p as PageType
-      currntPage === 'allview' && updateProviderAllView(_this)
-      currntPage === 'detailview' && updateProviderDetailView(_this)
-      currntPage === 'keypointview' && updateProviderKeypointView(_this)
+      try {
+        const currntPage = c_p as PageType
+        currntPage === 'allview' && updateProviderAllView(_this)
+        currntPage === 'detailview' && updateProviderDetailView(_this)
+        currntPage === 'keypointview' && updateProviderKeypointView(_this)
+      } catch (error) {
+        _this.$message.error(error)
+        store.commit('setIsLoading', false)
+      }
     })
     return {
       dateValue,

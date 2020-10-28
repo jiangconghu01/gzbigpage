@@ -49,7 +49,7 @@ export type OneArgVoidFun<T> = (arg: T) => void
 // cityCodeArr 城市编码数组
 // encodeArray 指标编码数组
 // type 类型
-export function getDatesParams(dates: string[], cityCodeArr: string[], encodeArray: string[], type: string): string {
+export function getDatesParams(dates: string[], cityCodeArr: string[], encodeArray: string[], type?: string): string {
   let paramStr = '['
   for (let k = 0; k < dates.length; k++) {
     const date = dates[k]
@@ -70,7 +70,7 @@ export function getDatesParams(dates: string[], cityCodeArr: string[], encodeArr
 // encodeArray 指标编码数组
 // type 类型
 //供应商编码数组
-export function getDatesParamsNew(dates: string[], cityCodeArr: string[], encodeArray: string[], providers: string[], type: string): string {
+export function getDatesParamsNew(dates: string[], cityCodeArr: string[], encodeArray: string[], providers: string[], type?: string): string {
   let paramStr = '['
   for (let k = 0; k < dates.length; k++) {
     const date = dates[k]

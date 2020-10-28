@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
 export type PageType = 'allview' | 'detailview' | 'keypointview'
 const curDate: Date = new Date()
-const defDate: string = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '/12' : curDate.getFullYear() + '/' + curDate.getMonth()
+const defDate: string =
+  curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? curDate.getMonth() + 1 + '' : '0' + (curDate.getMonth() + 1)) + curDate.getMonth()
 export default createStore({
   state: {
     currntPage: 'allview',

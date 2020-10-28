@@ -10,10 +10,24 @@ const getEncode = '/channelBigScreen/modInfoList'
 //取指标值的接口
 const encodeUrl = '/channelBigScreen/modIdxVOList'
 //请求和返回值类型，err统一类型后端暂未定义
+//指标返回类型
+interface EncodeType {
+  chartCode: string
+  idxCde: string
+  idxOrd: string
+}
+interface ViewEEncodeRes {
+  viewCode: string
+  chnlType: string
+  chartCode: string
+  chartOrd: string
+  idxs: EncodeType[]
+}
+//指标值返回类型
 interface ResData {
   chartCode: string
   idxCde: string
-  rptType: string
+  rptType?: string
   accountCode: string
   periodDate: string
   idxValue?: string
@@ -50,12 +64,18 @@ const businesstype = store.state.buniessType
 //统一请求函数
 const updateProviderAllView = async (_this: Record<string, any>) => {
   //图1用原来接口，先请求该图对应指标
-  const pageAllviewEncode = await requestPostData(getEncode, { viewCode: '9', chnlType: '0000' })
+  let pageAllviewEncode
+  try {
+    pageAllviewEncode = await requestPostData<Record<string, string>, ViewEEncodeRes[], unknown>(getEncode, { viewCode: '2001', chnlType: '00' })
+  } catch (error) {
+    _this.$message.error('指标加载失败,请刷新重试！')
+  }
+  //left-top图表请求数据逻辑
+  const leftTopParam: Prama = []
+  const leffTop = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftTopParam)
   //left-bottom图表请求数据逻辑
-  const leftTopParam = []
-  const leffTop = requestPostData<Prama, ResData[], any>(encodeUrl, [])
-  //left-bottom图表请求数据逻辑
-  const leffBottom = requestPostData<Prama, ResData[], any>(encodeUrl, [])
+  const leffBottomParam: Prama = []
+  const leffBottom = requestPostData<Prama, ResData[], unknown>(encodeUrl, leffBottomParam)
 
   //请求实际数据的promise数组
   const reqArr = [leffTop, leffBottom]
@@ -65,8 +85,7 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
       handleLeftTopChart(resLeffTop)
     })
     .catch((err) => {
-      _this.$message.error(err)
-      _this.$message.error('数据加载失败,请刷新重试！')
+      _this.$message.error('指标数据加载失败,请刷新重试！')
       console.log(err)
     })
     .finally(() => {

@@ -38,9 +38,22 @@ module.exports = {
     host: '0.0.0.0',
     port: 9001,
     proxy: {
-      '/czxt/': {
-        target: 'http://qqyifeng.cn',
-        changeOrigin: true
+      '/login': {
+        target: 'http://192.168.1.167:8750/',
+        changeOrigin: true,
+        secure: false
+        // pathRewrite: { '^/cpms/mnpl': '' }
+      },
+      '/channelBigScreen/': {
+        target: 'http://192.168.1.167:8750/',
+        changeOrigin: true,
+        secure: false
+        // pathRewrite: { '^/cpms/mnpl': '' }
+      },
+      '/bigScreen/': {
+        target: 'http://192.168.1.167:8750/',
+        changeOrigin: true,
+        secure: false
         // pathRewrite: { '^/cpms/mnpl': '' }
       }
     }

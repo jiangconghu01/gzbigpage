@@ -11,13 +11,30 @@ const getEncode = '/bigScreen/guiz/supplierIndexData/indexGroups'
 //取指标值的接口
 const encodeUrl = '/bigScreen/guiz/supplierIndexData/indexValues'
 //请求和返回值类型，err统一类型后端暂未定义
+// interface ProviderRes { //供应商返回类型
+//     accountCode: string
+//     monthId: string
+//     ywlx: string
+//     xh: string
+//     gysbm: string
+//     gysmc: string
+//   }
+//   interface encodeRes { //指标返回类型
+//     idxGroup: string
+//     idxCde: string
+//     idxName: string
+//     xh: string
+//   }
 interface ResData {
   accountCode: string
   monthId: string
   ywlx: string
   gysbm: string
   idxCde: string
+  gysmc?: string
   idxValue?: string
+  xh?: string
+  idxName?: string
 }
 type Prama = ResData[]
 
@@ -36,7 +53,7 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
     })
     .catch((err) => {
       _this.$message.error(err)
-      _this.$message.error('数据加载失败,请刷新重试！')
+      _this.$message.error('指标数据加载失败,请刷新重试！')
       console.log(err)
     })
     .finally(() => {
@@ -49,15 +66,20 @@ const citycode = store.state.cityCode
 const businesstype = store.state.buniessType
 
 const updateProviderKeypointView = async (_this: Record<string, any>) => {
-  //请求供应商编码和名称
-  const providerList = await requestPostData(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
+  let providerList: AxiosResponse<unknown>
+  try {
+    //请求供应商编码和名称
+    providerList = await requestPostData<Record<string, string>, ResData[], unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
+  } catch (error) {
+    _this.$message.error('供应商编码加载失败,请刷新重试！')
+  }
   //获取该页面所有图表的指标编码
   Promise.all([
-    requestPostData(getEncode, { idxGroup: '0201' }),
-    requestPostData(getEncode, { idxGroup: '0202' }),
-    requestPostData(getEncode, { idxGroup: '0203' }),
-    requestPostData(getEncode, { idxGroup: '0204' }),
-    requestPostData(getEncode, { idxGroup: '0205' })
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0201' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0202' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0203' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0204' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0205' })
   ])
     .then(([encode01, encode02, encode03, encode04, encode05]) => {
       const t_this = _this
@@ -70,15 +92,18 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
       }
       //left-top图表请求参数
       const leftTopParam: Prama = []
-      const leffTop = requestPostData<Prama, ResData[], any>(encodeUrl, leftTopParam)
+      const leffTop = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftTopParam)
       //left-bottom图表请求参数
       const leftBottomParam: Prama = []
-      const leffBottom = requestPostData<Prama, ResData[], any>(encodeUrl, leftBottomParam)
+      const leffBottom = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftBottomParam)
       const reqArr = [leffTop, leffBottom]
       handleAllDataRequest(t_this, reqArr, providerList, encodeMap)
     })
     .catch((e) => {
       _this.$message.error('指标加载失败,请刷新重试！')
+    })
+    .finally(() => {
+      store.commit('setIsLoading', false)
     })
 }
 
