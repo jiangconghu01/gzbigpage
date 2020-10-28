@@ -28,5 +28,4 @@ const GZProvinceCityItem: Record<string, string> = {
   A5211: '视频增值运营中心',
   A5212: '贵安新区'
 }
-const encodeUrl = '/czxt/pages/wjhx/getIdWjhxParm.do'
-export { GZProvinceCityEnum, GZProvinceCityItem, encodeUrl }
+export { GZProvinceCityEnum, GZProvinceCityItem }

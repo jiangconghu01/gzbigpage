@@ -40,9 +40,9 @@ import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
 type dateFmater = 'YYYYMM' | 'YYYYMM/DD'
-import updateProviderAllView from '../chartconfig/providerAllView/update.page.chart'
-import updateProviderDetailView from '../chartconfig/providerDetailView/update.page.chart'
-import updateProviderKeypointView from '../chartconfig/providerKeypointView/update.page.chart'
+import { updateProviderAllView } from '../chartconfig/providerAllView/update.page.chart'
+import { updateProviderDetailView } from '../chartconfig/providerDetailView/update.page.chart'
+import { updateProviderKeypointView } from '../chartconfig/providerKeypointView/update.page.chart'
 
 export default defineComponent({
   name: 'pageCommonHeader',
