@@ -6,17 +6,15 @@
       </a-month-picker>
       <a-select v-model:value="cityValue" style="width: 120px" @change="handleCityChange">
         <template v-slot:suffixIcon><CaretDownFilled /></template>
-        <a-select-option value="jack">Jack</a-select-option>
-        <a-select-option value="lucy">Lucy</a-select-option>
-        <a-select-option value="disabled" disabled>Disabled</a-select-option>
-        <a-select-option value="Yiminghe">yiminghe</a-select-option>
+        <a-select-option v-for="(val, key) in cityList" :value="key" :key="key">{{ val }}</a-select-option>
       </a-select>
       <a-select v-model:value="typeValue" style="width: 120px" @change="handleTypeChange">
         <template v-slot:suffixIcon><CaretDownFilled /></template>
-        <a-select-option value="1">类型</a-select-option>
-        <a-select-option value="2">类型2</a-select-option>
-        <a-select-option value="disabled" disabled>类型2</a-select-option>
-        <a-select-option value="Yiminghe">类型4</a-select-option>
+        <a-select-option value="all">全部业务</a-select-option>
+        <a-select-option value="asset">资产类</a-select-option>
+        <a-select-option value="cost">成本费</a-select-option>
+        <a-select-option value="income">收入</a-select-option>
+        <a-select-option value="other">其他</a-select-option>
       </a-select>
     </div>
     <div class="center-title">
@@ -31,18 +29,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, computed, onMounted, onUnmounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
+import { defineComponent, ref, watch, ComputedRef, computed, onMounted, onUnmounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { CaretDownFilled } from '@ant-design/icons-vue'
-import { getFormatDate } from '../utils/commFun'
-import { OneArgVoidFun } from '../utils/commFun'
-import store from '../store/index'
+import { getFormatDate, OneArgVoidFun } from '../utils/commFun'
+import { GZProvinceCityItem } from '../chartconfig/static'
+import store, { PageType } from '../store/index'
 import moment from 'moment'
 import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
-type dateFmater = 'YYYY/MM' | 'YYYY/MM/DD'
+type dateFmater = 'YYYYMM' | 'YYYYMM/DD'
 import updateProviderAllView from '../chartconfig/providerAllView/update.page.chart'
+import updateProviderDetailView from '../chartconfig/providerDetailView/update.page.chart'
+import updateProviderKeypointView from '../chartconfig/providerKeypointView/update.page.chart'
+
 export default defineComponent({
   name: 'pageCommonHeader',
   components: {
@@ -52,20 +53,25 @@ export default defineComponent({
     //时间选择
     const dateValue = ref<Date>(new Date())
     const zhLocale = ref<Record<string, any>>(locale)
-    const dateFmater: dateFmater = 'YYYY/MM'
+    const dateFmater: dateFmater = 'YYYYMM'
     const curDate = new Date()
     const defDate = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '/12' : curDate.getFullYear() + '/' + curDate.getMonth()
-    const handleDateChange: OneArgVoidFun<string> = (value) => {
+    const handleDateChange: OneArgVoidFun<moment.Moment> = (value: moment.Moment) => {
+      const sdate = value.format('YYYYMM')
       console.log(value)
+      store.commit('setSelectDate', sdate)
     }
     //城市选择
-    const cityValue = ref('')
+    const cityValue = ref('A52')
+    const cityList: Record<string, string> = GZProvinceCityItem
     const handleCityChange: OneArgVoidFun<string> = (value) => {
-      console.log(value, cityValue.value)
+      console.log(value, store.state.currntPage)
+      store.commit('setCityCode', value)
     }
     //类型选择
-    const typeValue = ref('1')
+    const typeValue = ref('all')
     const handleTypeChange: OneArgVoidFun<string> = (value) => {
+      store.commit('setBuniessType', value)
       console.log(value)
     }
     //当前时间显示
@@ -78,16 +84,17 @@ export default defineComponent({
       rightWeek.value = getFormatDate().week
     }
     let timer: number
+    const instance = getCurrentInstance() as ComponentInternalInstance //vue的this实例
+    const _this = instance.appContext.config.globalProperties //全局对象属性
     onMounted(() => {
       timer = window.setInterval(updateDate, 1000)
       console.log(zhLocale)
-      const instance = getCurrentInstance() as ComponentInternalInstance //vue的this实例
-      const _this = instance.appContext.config.globalProperties //全局对象属性
       updateProviderAllView(_this)
     })
     onUnmounted(() => {
       window.clearInterval(timer)
     })
+    //选择不同的
     //标题设置
     type Dictionary<T> = { [key: string]: T }
     const Titles: Dictionary<string> = {
@@ -108,6 +115,18 @@ export default defineComponent({
       const toPage: string = currentIndex + 1 > 2 ? routelist[0] : routelist[currentIndex + 1]
       router.push({ name: toPage })
     }
+    //监听全局的参数变化
+    const storeDate: ComputedRef<string> = computed(() => store.state.selectDate)
+    const storeType: ComputedRef<string> = computed(() => store.state.buniessType)
+    const storeCity: ComputedRef<string> = computed(() => store.state.cityCode)
+    const storePage: ComputedRef<string> = computed(() => store.state.currntPage)
+    watch<ComputedRef<string>[], false>([storeDate, storeType, storeCity, storePage], ([c_d, c_t, c_c, c_p]) => {
+      store.commit('setIsLoading', true)
+      const currntPage = c_p as PageType
+      currntPage === 'allview' && updateProviderAllView(_this)
+      currntPage === 'detailview' && updateProviderDetailView(_this)
+      currntPage === 'keypointview' && updateProviderKeypointView(_this)
+    })
     return {
       dateValue,
       cityValue,
@@ -123,7 +142,8 @@ export default defineComponent({
       rightTime,
       rightWeek,
       titleText,
-      changePage
+      changePage,
+      cityList
     }
   }
 })

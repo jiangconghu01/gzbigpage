@@ -22,29 +22,16 @@ const businesstype = store.state.buniessType
 const leftTopParam = { paramArrs: '' }
 const leffTop = requestPostData<Prama, ResData, any>(encodeUrl, { paramArrs: '202008,A3301,NHDP0114],[202008,A3301,NHDP0115],[202008,A3301,NHDP0117]' })
 function handleLeftTopChart(resData: AxiosResponse<ResData>) {
-  const config = pageChartsConfig.providerAllView.child['all-view-left-top']
-  config.series[0].data = [
-    {
-      value: 7.59,
-      name: 'xxx'
-    },
-    {
-      value: 2.41,
-      name: 'xx'
-    },
-    {
-      value: 0,
-      name: 'eee'
-    }
-  ]
+  let config = pageChartsConfig.providerKeypointView.child['keypoint-view-top-left']
+  config = {}
   console.log(resData)
 }
 
 //left-bottom图表请求数据逻辑
-const leffBottom = requestPostData<Prama, ResData, any>(encodeUrl, { paramArrs: '202007,A3301,NHDP0114],[202007,A3301,NHDP0115],[202007,A3301,NHDP0117]' })
+const leffBottom = requestPostData<Prama, ResData, any>('/czxt/pages/wjhx/getIdWjhxParm.do', { paramArrs: '202007,A3301,NHDP0114],[202007,A3301,NHDP0115],[202007,A3301,NHDP0117]' })
 
 const reqArr = [leffTop, leffBottom]
-export default function updateProviderAllView(_this: Record<string, any>) {
+export default function updateProviderKeypointView(_this: Record<string, any>) {
   Promise.all(reqArr)
     .then(([resLeffTop, resLeffBottom]) => {
       _this.$message.success('数据加载成功！')

@@ -11,7 +11,7 @@ const option = {
       fontFamily: 'PingFangSC-Regular,PingFang SC;'
     }
   },
-  color: ['#D55CE7','#6B51FE','#E85089','#AD6BE7','#F5952F','#58ABF1','#F2DA32','#16D4D2'],
+  color: ['#D55CE7', '#6B51FE', '#E85089', '#AD6BE7', '#F5952F', '#58ABF1', '#F2DA32', '#16D4D2'],
   tooltip: {
     trigger: 'item',
     formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -49,7 +49,7 @@ const option = {
           name: 'rose4'
         },
         {
-          value: 15.00,
+          value: 15.0,
           name: 'rose5'
         },
         {
@@ -65,7 +65,7 @@ const option = {
           name: 'rose8'
         }
       ]
-    },
+    }
   ]
 }
 export default option
