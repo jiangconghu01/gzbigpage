@@ -1,15 +1,18 @@
 <template>
   <div id="nav">
-    <pageContainerBox :config="{ width: 1920, height: 1080, isfix: false }">
-      <pageCommonHeader></pageCommonHeader>
-      <router-view class="router-page" />
-    </pageContainerBox>
+    <a-spin tip="Loading..." :spinning="spinning">
+      <pageContainerBox :config="{ width: 1920, height: 1080, isfix: false }">
+        <pageCommonHeader></pageCommonHeader>
+        <router-view class="router-page" />
+      </pageContainerBox>
+    </a-spin>
   </div>
 </template>
 <script lang="ts">
 import pageContainerBox from './components/pageContainerBox.vue'
 import pageCommonHeader from './components/pageCommonHeader.vue'
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import store from './store/index'
 export default defineComponent({
   name: 'app',
   components: {
@@ -17,7 +20,10 @@ export default defineComponent({
     pageCommonHeader
   },
   setup() {
-    return {}
+    const spinning = computed(() => store.state.isLoading)
+    return {
+      spinning
+    }
   }
 })
 </script>
@@ -45,6 +51,13 @@ body {
     left: 0;
     top: 0;
     z-index: -1;
+  }
+  .ant-spin-nested-loading {
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    // .ant-spin {
+    //   background-color: rgba(0, 0, 0, 0.774);
+    // }
   }
   .router-page {
     height: 990px;

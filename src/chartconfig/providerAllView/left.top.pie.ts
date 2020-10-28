@@ -16,7 +16,7 @@ const option = {
     trigger: 'item',
     textStyle: {
       fontSize: 14
-  },
+    },
     formatter: '{a} <br/>{b} : {c} ({d}%)'
   },
   series: [
@@ -49,7 +49,7 @@ const option = {
           name: 'rose3'
         }
       ]
-    },
+    }
   ]
 }
 export default option

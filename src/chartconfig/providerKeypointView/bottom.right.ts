@@ -1,8 +1,9 @@
 const option = {
   tooltip: {
     trigger: 'axis',
-    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    axisPointer: {
+      // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
     }
   },
   legend: {
@@ -27,7 +28,7 @@ const option = {
       },
       axisLine: {
         lineStyle: {
-          color: '#183888',
+          color: '#183888'
         }
       },
       axisTick: {
@@ -42,7 +43,7 @@ const option = {
           color: '#183888'
         }
       },
-      data: ['菜鸟网络', '长亭科技', '字节跳动','字节跳动','字节跳动','字节跳动','字节跳动']
+      data: ['菜鸟网络', '长亭科技', '字节跳动', '字节跳动', '字节跳动', '字节跳动', '字节跳动']
     }
   ],
   yAxis: [
@@ -60,9 +61,10 @@ const option = {
           color: '#183688'
         }
       },
-      axisLine: { //坐标轴轴线相关设置。数学上的x轴
-        show: false,
-      },
+      axisLine: {
+        //坐标轴轴线相关设置。数学上的x轴
+        show: false
+      }
     }
   ],
   color: ['#58ABF1', '#F4962F'],
@@ -70,16 +72,16 @@ const option = {
     {
       name: 'xx',
       type: 'bar',
-      barWidth:'25%',
+      barWidth: '25%',
       stack: '广告',
-      data: [4.2, 9,6.5,2.4,4.3,4.1,7.5]
+      data: [4.2, 9, 6.5, 2.4, 4.3, 4.1, 7.5]
     },
     {
       name: 'yyy',
       type: 'bar',
       stack: '广告',
-      data: [2, 0,3,1,0,4,3]
-    },
+      data: [2, 0, 3, 1, 0, 4, 3]
+    }
   ]
 }
 export default option

@@ -1,8 +1,9 @@
 const option = {
   tooltip: {
     trigger: 'axis',
-    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    axisPointer: {
+      // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
     }
   },
   legend: {
@@ -27,7 +28,7 @@ const option = {
       },
       axisLine: {
         lineStyle: {
-          color: '#183888',
+          color: '#183888'
         }
       },
       axisTick: {
@@ -50,10 +51,10 @@ const option = {
       name: '单位：个',
       axisTick: {
         lineStyle: {
-            width: 2,
-            color: '#398FD1'
+          width: 2,
+          color: '#398FD1'
         }
-    },
+      },
       axisLabel: {
         textStyle: {
           color: '#398FD1'
@@ -64,12 +65,13 @@ const option = {
           color: '#183688'
         }
       },
-      axisLine: { //坐标轴轴线相关设置。数学上的x轴
+      axisLine: {
+        //坐标轴轴线相关设置。数学上的x轴
         show: false,
         lineStyle: {
-          color: '#C9EFFA',
+          color: '#C9EFFA'
         }
-      },
+      }
     }
   ],
   color: ['#16D4D2', '#F2DA32', '#58ABF1', '#6A50FF', '#D55CE7'],
@@ -83,17 +85,16 @@ const option = {
         normal: {
           show: true,
           position: 'inside',
-          formatter: function(p:any){
-            console.log(p)
-            return p.value >0 ? p.value : ''
+          formatter: function(p: any) {
+            return p.value > 0 ? p.value : ''
           },
           textStyle: {
             align: 'center',
             baseline: 'middle',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '400'
           }
-        },
+        }
       },
       data: [5, 3, 6, 5, 4, 2]
     },
@@ -105,16 +106,16 @@ const option = {
         normal: {
           show: true,
           position: 'inside',
-          formatter: function(p:any){
-            return p.value >0 ? p.value : ''
+          formatter: function(p: any) {
+            return p.value > 0 ? p.value : ''
           },
           textStyle: {
             align: 'center',
             baseline: 'middle',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '400'
           }
-        },
+        }
       },
       data: [2, 0, 0, 0, 5, 0]
     },
@@ -126,16 +127,16 @@ const option = {
         normal: {
           show: true,
           position: 'inside',
-          formatter: function(p:any){
-            return p.value >0 ? p.value : ''
+          formatter: function(p: any) {
+            return p.value > 0 ? p.value : ''
           },
           textStyle: {
             align: 'center',
             baseline: 'middle',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '400'
           }
-        },
+        }
       },
       data: [1, 0, 0, 4, 0, 0]
     },
@@ -147,16 +148,16 @@ const option = {
         normal: {
           show: true,
           position: 'inside',
-          formatter: function(p:any){
-            return p.value >0 ? p.value : ''
+          formatter: function(p: any) {
+            return p.value > 0 ? p.value : ''
           },
           textStyle: {
             align: 'center',
             baseline: 'middle',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '400'
           }
-        },
+        }
       },
       data: [0, 4, 0, 0, 0, 0]
     },
@@ -168,19 +169,19 @@ const option = {
         normal: {
           show: true,
           position: 'inside',
-          formatter: function(p:any){
-            return p.value >0 ? p.value : ''
+          formatter: function(p: any) {
+            return p.value > 0 ? p.value : ''
           },
           textStyle: {
             align: 'center',
             baseline: 'middle',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '400'
           }
-        },
+        }
       },
       data: [0, 0, 3, 2, 0, 4]
-    },
+    }
   ]
 }
 export default option
