@@ -26,6 +26,10 @@ const encodeUrl = '/bigScreen/guiz/supplierIndexData/indexValues'
 //     idxName: string
 //     xh: string
 //   }
+interface ResponseBody {
+  code?: number | string | null
+  data: ResData[]
+}
 interface ResData {
   accountCode: string
   monthId: string
@@ -41,12 +45,11 @@ interface ResData {
 type Prama = ResData[]
 
 //left-top 图表的数据更新逻辑
-function handleLeftTopChart(resData: AxiosResponse<ResData[]>, providerList: any, encodeList: any) {
+function handleLeftTopChart(resData: AxiosResponse<ResponseBody>, providerList: any, encodeList: any) {
   const providerListRqu: any = providerList.data.data.map((ele: any) => ele.gysmc)
   const config = pageChartsConfig.providerKeypointView.child['keypoint-view-top-left']
   //纵坐标数据
   config.yAxis.data = providerListRqu
-  debugger
   //列账金额
   const series1: any = resData.data
   const series1Data = series1.data.filter((val: any) => val.idxCode === 'ZDGYS_0001')
@@ -55,7 +58,6 @@ function handleLeftTopChart(resData: AxiosResponse<ResData[]>, providerList: any
     val.value = val.idxValue
     return val
   })
-  debugger
   const series2: any = resData.data
   const series2Data = series2.data.filter((val: any) => val.idxCode === 'ZDGYS_0002')
   config.series[1].data = series2Data.map((val: any) => {
@@ -73,7 +75,7 @@ function handleLeftTopChart(resData: AxiosResponse<ResData[]>, providerList: any
   //纵坐标对应的serice数据
 }
 
-function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResData[]>>[], providerList: any, encodeList: Record<string, any>) {
+function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResponseBody>>[], providerList: any, encodeList: Record<string, any>) {
   Promise.all(reqArr)
     .then(([resLeffTop, resLeffBottom]) => {
       _this.$message.success('数据加载成功！')
@@ -92,28 +94,30 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
     })
 }
 //全局统一参数
-// const date = store.state.selectDate
-const date = '202007'
-const citycode = store.state.cityCode
-const businesstype = store.state.buniessType
+// const citycode = store.getters.getCityCode
+// const businesstype = store.state.buniessType
+// const date = window.sessionStorage.getItem("selectDate") as string
 
 const updateProviderKeypointView = async (_this: Record<string, any>) => {
-  let providerList: AxiosResponse<ResData[]>
+  const date = '202007'
+  const citycode = store.getters.getCityCode
+  const businesstype = store.state.buniessType
+  let providerList: AxiosResponse<ResponseBody>
 
   try {
     //请求供应商编码和名称
-    providerList = await requestPostData<Record<string, string>, ResData[], unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
+    providerList = await requestPostData<Record<string, string>, ResponseBody, unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
   } catch (error) {
     _this.$message.error('供应商编码加载失败,请刷新重试！')
   }
   //获取该页面所有图表的指标编码
 
   Promise.all([
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0201' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0202' })
-    // requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0203' }),
-    // requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0204' }),
-    // requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0205' })
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0201' }),
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0202' })
+    // requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0203' }),
+    // requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0204' }),
+    // requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0205' })
   ])
     .then(([encode01, encode02]) => {
       const t_this = _this
@@ -125,7 +129,7 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
         // encode05
       }
       //left-top图表请求参数
-
+      debugger
       const pro: any = providerList.data
       const providerListRqu: any = pro.data.map((ele: any) => ele.gysbm)
 
@@ -135,10 +139,10 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
       const p = getDatesParamsNew([date], [citycode], encodetopleft, providerListRqu, businesstype)
       const leftTopParam: Prama = JSON.parse(p)
 
-      const leffTop = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftTopParam)
+      const leffTop = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leftTopParam)
       //left-bottom图表请求参数
       // const leftBottomParam: Prama = []
-      // const leffBottom = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftBottomParam)
+      // const leffBottom = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leftBottomParam)
 
       const reqArr = [leffTop]
 

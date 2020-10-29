@@ -25,6 +25,10 @@ interface ViewEEncodeRes {
   idxs: EncodeType[]
 }
 //指标值返回类型
+interface ResponseBody {
+  code?: number | string | null
+  data: ResData[]
+}
 interface ResData {
   chartCode: string
   idxCde: string
@@ -38,7 +42,7 @@ interface ResData {
 type Prama = ResData[]
 
 //left-top图表请求数据逻辑
-function handleLeftTopChart(resData: AxiosResponse<ResData[]>) {
+function handleLeftTopChart(resData: AxiosResponse<ResponseBody>) {
   const config = pageChartsConfig.providerAllView.child['all-view-left-top']
   config.series[0].data = [
     {
@@ -57,26 +61,26 @@ function handleLeftTopChart(resData: AxiosResponse<ResData[]>) {
   console.log(resData)
 }
 
-//全局统一参数
-const date = store.state.selectDate
-const citycode = store.state.cityCode
-const businesstype = store.state.buniessType
-
 //统一请求函数
 const updateProviderAllView = async (_this: Record<string, any>) => {
+  //全局统一参数
+  // const date = store.state.selectDate
+  const date = '202007'
+  const citycode = store.state.cityCode
+  const businesstype = store.state.buniessType
   //图1用原来接口，先请求该图对应指标
   let pageAllviewEncode
   try {
-    pageAllviewEncode = await requestPostData<Record<string, string>, ViewEEncodeRes[], unknown>(getEncode, { viewCode: '2001', chnlType: '00' })
+    pageAllviewEncode = await requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2001', chnlType: '00' })
   } catch (error) {
     _this.$message.error('指标加载失败,请刷新重试！')
   }
   //left-top图表请求数据逻辑
   const leftTopParam: Prama = []
-  const leffTop = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftTopParam)
+  const leffTop = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leftTopParam)
   //left-bottom图表请求数据逻辑
   const leffBottomParam: Prama = []
-  const leffBottom = requestPostData<Prama, ResData[], unknown>(encodeUrl, leffBottomParam)
+  const leffBottom = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leffBottomParam)
 
   //请求实际数据的promise数组
   const reqArr = [leffTop, leffBottom]

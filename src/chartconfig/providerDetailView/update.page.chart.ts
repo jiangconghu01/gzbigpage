@@ -12,6 +12,10 @@ const getEncode = '/bigScreen/guiz/supplierIndexData/indexGroups'
 //取指标值的接口
 const encodeUrl = '/bigScreen/guiz/supplierIndexData/indexValues'
 //请求和返回值类型，err统一类型后端暂未定义
+interface ResponseBody {
+  code?: number | string | null
+  data: ResData[]
+}
 interface ResData {
   accountCode: string
   monthId: string
@@ -27,13 +31,13 @@ interface ResData {
 type Prama = ResData[]
 
 //top-left 图表的数据更新逻辑
-function handleTopLeftChart(resData: AxiosResponse<ResData[]>) {
+function handleTopLeftChart(resData: AxiosResponse<ResponseBody>) {
   let config = pageChartsConfig.providerDetailView.child['keypoint-view-top-left']
   config = {}
   console.log(resData)
 }
 
-function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResData[]>>[], providerList: any, encodeList: Record<string, any>) {
+function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResponseBody>>[], providerList: any, encodeList: Record<string, any>) {
   Promise.all(reqArr)
     .then(([resLeffTop, resLeffBottom]) => {
       _this.$message.success('数据加载成功！')
@@ -51,27 +55,29 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
       store.commit('setIsLoading', false)
     })
 }
-//全局统一参数
-const date = store.state.selectDate
-const citycode = store.state.cityCode
-const businesstype = store.state.buniessType
 
 const updateProviderDetailView = async (_this: Record<string, any>) => {
+  //全局统一参数
+  // const date = store.state.selectDate
+  const date = '202007'
+  const citycode = store.state.cityCode
+  const businesstype = store.state.buniessType
+
   let providerList: AxiosResponse<unknown>
   try {
     //请求供应商编码和名称
-    providerList = await requestPostData<Record<string, string>, ResData[], unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
+    providerList = await requestPostData<Record<string, string>, ResponseBody, unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
   } catch (error) {
     _this.$message.error('供应商编码加载失败,请刷新重试！')
   }
   //获取该页面所有图表的指标编码
   Promise.all([
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0301' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0302' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0303' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0304' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0305' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0306' })
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0301' }),
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0302' }),
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0303' }),
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0304' }),
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0305' }),
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0306' })
   ])
     .then(([encode01, encode02, encode03, encode04, encode05, encode06]) => {
       const t_this = _this
@@ -85,7 +91,7 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
       }
       //top-left图表请求参数
       const topLeftParam: Prama = []
-      const topLeft = requestPostData<Prama, ResData[], unknown>(encodeUrl, topLeftParam)
+      const topLeft = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, topLeftParam)
       //bottom-eft图表请求参数
 
       const reqArr = [topLeft]
