@@ -13,7 +13,7 @@ const option = {
     },
     itemWidth: 15,
     itemHeight: 15,
-    data: ['xx', 'yyy']
+    data: ['实缴资本', '实收资本','资本差异']
   },
   grid: {
     left: '3%',
@@ -21,9 +21,9 @@ const option = {
     bottom: '3%',
     containLabel: true
   },
-  xAxis: [
-    {
+  xAxis:{
       axisLabel: {
+        interval:0, //强制显示文字
         color: '#398FD1'
       },
       axisLine: {
@@ -44,8 +44,7 @@ const option = {
         }
       },
       data: ['菜鸟网络', '长亭科技', '字节跳动', '字节跳动', '字节跳动', '字节跳动', '字节跳动']
-    }
-  ],
+    },
   yAxis: [
     {
       axisTick: {
@@ -67,17 +66,23 @@ const option = {
       }
     }
   ],
-  color: ['#58ABF1', '#F4962F'],
+  color: ['#58ABF1', '#F4962F','#F2DA32'],
   series: [
     {
-      name: 'xx',
+      name: '实缴资本',
       type: 'bar',
       barWidth: '25%',
       stack: '广告',
       data: [4.2, 9, 6.5, 2.4, 4.3, 4.1, 7.5]
     },
     {
-      name: 'yyy',
+      name: '实收资本',
+      type: 'bar',
+      stack: '广告',
+      data: [2, 0, 3, 1, 0, 4, 3]
+    },
+    {
+      name: '资本差异',
       type: 'bar',
       stack: '广告',
       data: [2, 0, 3, 1, 0, 4, 3]
