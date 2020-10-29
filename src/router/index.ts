@@ -30,7 +30,6 @@ const router: Router = createRouter({
   routes
 })
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-  debugger
   if (process.env.NODE_ENV === 'development' && to.name === 'Home') {
     try {
       const a = await requestPostData('/login', qs.stringify({ account: 10000, sct: 'c4ca4238a0b923820dcc509a6f75849b', yzm: '' }))
