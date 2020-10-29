@@ -201,7 +201,7 @@ function handleBtRightChart(resData: AxiosResponse<ResponseBody>, providerList: 
 
 function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResponseBody>>[], providerList: any, encodeList: Record<string, any>) {
   Promise.all(reqArr)
-    .then(([resLeffTop,resRightTop,resBtCenter,resBtRight]) => {
+    .then(([resLeffTop, resRightTop, resBtCenter, resBtRight]) => {
       _this.$message.success('数据加载成功！')
       handleLeftTopChart(resLeffTop, providerList, encodeList)
       handleRightTopChart(resRightTop, providerList, encodeList)
@@ -246,7 +246,7 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
     requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0204' }),
     requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0205' })
   ])
-    .then(([encode01, encode02,encode04,encode05]) => {
+    .then(([encode01, encode02, encode04, encode05]) => {
       const t_this = _this
       const encodeMap = {
         encode01,
@@ -287,7 +287,7 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
       const btRightParam: Prama = JSON.parse(p5)
       const btRight = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, btRightParam)
 
-      const reqArr = [leffTop,rightTop,btCenter,btRight]
+      const reqArr = [leffTop, rightTop, btCenter, btRight]
       handleAllDataRequest(t_this, reqArr, providerList, encodeMap)
     })
     .catch((e) => {
