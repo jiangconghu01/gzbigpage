@@ -17,7 +17,10 @@ interface ResData {
   ywlx: string
   gysbm: string
   idxCde: string
+  gysmc?: string
   idxValue?: string
+  xh?: string
+  idxName?: string
 }
 type Prama = ResData[]
 
@@ -36,7 +39,7 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
     })
     .catch((err) => {
       _this.$message.error(err)
-      _this.$message.error('数据加载失败,请刷新重试！')
+      _this.$message.error('指标数据加载失败,请刷新重试！')
       console.log(err)
     })
     .finally(() => {
@@ -49,16 +52,21 @@ const citycode = store.state.cityCode
 const businesstype = store.state.buniessType
 
 const updateProviderDetailView = async (_this: Record<string, any>) => {
-  //请求供应商编码和名称
-  const providerList = await requestPostData(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
+  let providerList: AxiosResponse<unknown>
+  try {
+    //请求供应商编码和名称
+    providerList = await requestPostData<Record<string, string>, ResData[], unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
+  } catch (error) {
+    _this.$message.error('供应商编码加载失败,请刷新重试！')
+  }
   //获取该页面所有图表的指标编码
   Promise.all([
-    requestPostData(getEncode, { idxGroup: '0301' }),
-    requestPostData(getEncode, { idxGroup: '0302' }),
-    requestPostData(getEncode, { idxGroup: '0303' }),
-    requestPostData(getEncode, { idxGroup: '0304' }),
-    requestPostData(getEncode, { idxGroup: '0305' }),
-    requestPostData(getEncode, { idxGroup: '0306' })
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0301' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0302' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0303' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0304' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0305' }),
+    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0306' })
   ])
     .then(([encode01, encode02, encode03, encode04, encode05, encode06]) => {
       const t_this = _this
@@ -72,7 +80,7 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
       }
       //top-left图表请求参数
       const topLeftParam: Prama = []
-      const topLeft = requestPostData<Prama, ResData[], any>(encodeUrl, topLeftParam)
+      const topLeft = requestPostData<Prama, ResData[], unknown>(encodeUrl, topLeftParam)
       //bottom-eft图表请求参数
 
       const reqArr = [topLeft]
@@ -80,6 +88,9 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
     })
     .catch((e) => {
       _this.$message.error('指标加载失败,请刷新重试！')
+    })
+    .finally(() => {
+      store.commit('setIsLoading', false)
     })
 }
 
