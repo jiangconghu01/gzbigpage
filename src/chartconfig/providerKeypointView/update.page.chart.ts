@@ -38,6 +38,7 @@ interface ResData {
   idxCde?: string
   idxCode?: string
   gysmc?: string
+  gysjc?: string
   idxValue?: string
   xh?: string
   idxName?: string
@@ -54,32 +55,158 @@ function handleLeftTopChart(resData: AxiosResponse<ResponseBody>, providerList: 
   const series1: any = resData.data
   const series1Data = series1.data.filter((val: any) => val.idxCode === 'ZDGYS_0001')
   config.series[0].data = series1Data.map((val: any) => {
-    val.name = val.gysmc
+    val.name = val.gysjc
     val.value = val.idxValue
     return val
   })
   const series2: any = resData.data
   const series2Data = series2.data.filter((val: any) => val.idxCode === 'ZDGYS_0002')
   config.series[1].data = series2Data.map((val: any) => {
-    val.name = val.gysmc
+    val.name = val.gysjc
     val.value = val.idxValue
     return val
   })
   const series3: any = resData.data
   const series3Data = series3.data.filter((val: any) => val.idxCode === 'ZDGYS_0003')
   config.series[2].data = series3Data.map((val: any) => {
-    val.name = val.gysmc
+    val.name = val.gysjc
     val.value = val.idxValue
     return val
   })
   //纵坐标对应的serice数据
 }
 
+//right-top 图表的数据更新逻辑
+function handleRightTopChart(resData: AxiosResponse<ResponseBody>, providerList: any, encodeList: any) {
+  const providerListRqu: any = providerList.data.data.map((ele: any) => ele.gysjc)
+  const config = pageChartsConfig.providerKeypointView.child['keypoint-view-top-right']
+  //横坐标数据
+  config.xAxis.data = providerListRqu
+  //法律诉讼
+  const series1Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0004')
+  config.series[0].data = series1Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series2Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0005')
+  config.series[1].data = series2Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series3Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0006')
+  config.series[2].data = series3Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  //纵坐标对应的serice数据
+}
+
+//bottom-center 图表的数据更新逻辑
+function handleBtCenterChart(resData: AxiosResponse<ResponseBody>, providerList: any, encodeList: any) {
+  const providerListRqu: any = providerList.data.data.map((ele: any) => ele.gysjc)
+  const config = pageChartsConfig.providerKeypointView.child['keypoint-view-bottom-center']
+  //横坐标数据
+  config.xAxis.data = providerListRqu
+  const series1Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0007')
+  config.series[0].data = series1Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series2Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0008')
+  config.series[1].data = series2Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series3Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0009')
+  config.series[2].data = series3Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series4Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0010')
+  config.series[0].data = series1Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series5Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0011')
+  config.series[1].data = series2Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series6Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0012')
+  config.series[2].data = series3Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series7Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0013')
+  config.series[0].data = series1Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series8Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0014')
+  config.series[1].data = series2Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series9Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0015')
+  config.series[2].data = series3Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series10Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0016')
+  config.series[0].data = series1Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  //纵坐标对应的serice数据
+}
+
+//bottom-right 图表的数据更新逻辑
+function handleBtRightChart(resData: AxiosResponse<ResponseBody>, providerList: any, encodeList: any) {
+  const providerListRqu: any = providerList.data.data.map((ele: any) => ele.gysjc)
+  const config = pageChartsConfig.providerKeypointView.child['keypoint-view-bottom-right']
+  //横坐标数据
+  config.xAxis.data = providerListRqu
+  const series1Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0017')
+  config.series[0].data = series1Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series2Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0018')
+  config.series[1].data = series2Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+  const series3Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0019')
+  config.series[2].data = series3Data.map((val: any) => {
+    val.name = val.gysjc
+    val.value = val.idxValue
+    return val
+  })
+}
+
 function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResponseBody>>[], providerList: any, encodeList: Record<string, any>) {
   Promise.all(reqArr)
-    .then(([resLeffTop, resLeffBottom]) => {
+    .then(([resLeffTop,resRightTop,resBtCenter,resBtRight]) => {
       _this.$message.success('数据加载成功！')
       handleLeftTopChart(resLeffTop, providerList, encodeList)
+      handleRightTopChart(resRightTop, providerList, encodeList)
+      handleBtCenterChart(resBtCenter, providerList, encodeList)
+      handleBtRightChart(resBtRight, providerList, encodeList)
       setTimeout(() => {
         inintChartsUpdate('providerKeypointView')
       }, 0)
@@ -114,25 +241,22 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
 
   Promise.all([
     requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0201' }),
-    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0202' })
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0202' }),
     // requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0203' }),
-    // requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0204' }),
-    // requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0205' })
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0204' }),
+    requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0205' })
   ])
-    .then(([encode01, encode02]) => {
+    .then(([encode01, encode02,encode04,encode05]) => {
       const t_this = _this
       const encodeMap = {
         encode01,
-        encode02
+        encode02,
         // encode03,
-        // encode04,
-        // encode05
+        encode04,
+        encode05
       }
       //left-top图表请求参数
-      debugger
-      const pro: any = providerList.data
-      const providerListRqu: any = pro.data.map((ele: any) => ele.gysbm)
-
+      const providerListRqu = providerList.data.data.map((ele) => ele.gysbm)
       const t: any = encode01.data
       const encodetopleft = t.data.map((v: any) => v.idxCde)
 
@@ -140,12 +264,30 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
       const leftTopParam: Prama = JSON.parse(p)
 
       const leffTop = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leftTopParam)
+
+      //right-top图表请求参数
+      const encodetopright = encode02.data.data.map((v: any) => v.idxCde)
+      const p2 = getDatesParamsNew([date], [citycode], encodetopright, providerListRqu, businesstype)
+      const rightTopParam: Prama = JSON.parse(p2)
+      const rightTop = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, rightTopParam)
+
       //left-bottom图表请求参数
       // const leftBottomParam: Prama = []
       // const leffBottom = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leftBottomParam)
 
-      const reqArr = [leffTop]
+      //bottom-center图表请求参数
+      const encodebtcenter = encode04.data.data.map((v: any) => v.idxCde)
+      const p4 = getDatesParamsNew([date], [citycode], encodebtcenter, providerListRqu, businesstype)
+      const btCenterParam: Prama = JSON.parse(p4)
+      const btCenter = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, btCenterParam)
 
+      //bottom-right图表请求参数
+      const encodebtright = encode05.data.data.map((v: any) => v.idxCde)
+      const p5 = getDatesParamsNew([date], [citycode], encodebtright, providerListRqu, businesstype)
+      const btRightParam: Prama = JSON.parse(p5)
+      const btRight = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, btRightParam)
+
+      const reqArr = [leffTop,rightTop,btCenter,btRight]
       handleAllDataRequest(t_this, reqArr, providerList, encodeMap)
     })
     .catch((e) => {
