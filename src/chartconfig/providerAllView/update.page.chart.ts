@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios'
 import { pageChartsConfig } from '../installchart'
 import { getDatesParams } from '../../utils/commFun'
 import store from '../../store/index'
+import { inintChartsUpdate } from '../installchart'
 // import { encodeUrl } from '../static'
 
 //取图形的指标接口，图形编码从上到下，从左到右
@@ -83,6 +84,9 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
     .then(([resLeffTop, resLeffBottom]) => {
       _this.$message.success('数据加载成功！')
       handleLeftTopChart(resLeffTop)
+      setTimeout(() => {
+        inintChartsUpdate('providerAllView')
+      }, 0)
     })
     .catch((err) => {
       _this.$message.error('指标数据加载失败,请刷新重试！')
