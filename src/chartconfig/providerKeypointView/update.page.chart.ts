@@ -1,7 +1,7 @@
 import { requestPostData } from '../../http/http'
 import { AxiosResponse } from 'axios'
 import { pageChartsConfig } from '../installchart'
-import { getDatesParams } from '../../utils/commFun'
+import { getDatesParams,getDatesParamsNew } from '../../utils/commFun'
 import store from '../../store/index'
 // import { encodeUrl } from '../static'
 //取供应商接口
@@ -39,17 +39,19 @@ interface ResData {
 type Prama = ResData[]
 
 //left-top 图表的数据更新逻辑
-function handleLeftTopChart(resData: AxiosResponse<ResData[]>) {
-  let config = pageChartsConfig.providerKeypointView.child['keypoint-view-top-left']
-  config = {}
+function handleLeftTopChart(resData: AxiosResponse<ResData[]>,providerList:any) {
+  const providerListRqu:any = providerList.data.data.map((ele:any)=>ele.gysmc)
+  const config = pageChartsConfig.providerKeypointView.child['keypoint-view-top-left']
+  config.yAxis.data = providerListRqu
   console.log(resData)
 }
 
 function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResData[]>>[], providerList: any, encodeList: Record<string, any>) {
+ debugger
   Promise.all(reqArr)
     .then(([resLeffTop, resLeffBottom]) => {
       _this.$message.success('数据加载成功！')
-      handleLeftTopChart(resLeffTop)
+      handleLeftTopChart(resLeffTop,providerList)
     })
     .catch((err) => {
       _this.$message.error(err)
@@ -61,12 +63,14 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
     })
 }
 //全局统一参数
-const date = store.state.selectDate
+// const date = store.state.selectDate
+const date = '202007'
 const citycode = store.state.cityCode
 const businesstype = store.state.buniessType
 
 const updateProviderKeypointView = async (_this: Record<string, any>) => {
-  let providerList: AxiosResponse<unknown>
+  let providerList: AxiosResponse<ResData[]>
+
   try {
     //请求供应商编码和名称
     providerList = await requestPostData<Record<string, string>, ResData[], unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
@@ -74,32 +78,46 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
     _this.$message.error('供应商编码加载失败,请刷新重试！')
   }
   //获取该页面所有图表的指标编码
+  
   Promise.all([
     requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0201' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0202' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0203' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0204' }),
-    requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0205' })
+    // requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0202' }),
+    // requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0203' }),
+    // requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0204' }),
+    // requestPostData<{ idxGroup: string }, ResData[], unknown>(getEncode, { idxGroup: '0205' })
   ])
-    .then(([encode01, encode02, encode03, encode04, encode05]) => {
+    .then(([encode01]) => {
       const t_this = _this
       const encodeMap = {
         encode01,
-        encode02,
-        encode03,
-        encode04,
-        encode05
+        // encode02,
+        // encode03,
+        // encode04,
+        // encode05
       }
       //left-top图表请求参数
-      const leftTopParam: Prama = []
+
+      const pro:any = providerList.data
+      const providerListRqu:any = pro.data.map((ele:any)=>ele.gysbm)
+ 
+
+      const t:any = encode01.data
+      const encodetopleft = t.data.map((v:any)=>v.idxCde)
+
+      const p = getDatesParamsNew([date],[citycode],encodetopleft,providerListRqu,businesstype)
+      const leftTopParam: Prama = JSON.parse(p)
+
       const leffTop = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftTopParam)
       //left-bottom图表请求参数
-      const leftBottomParam: Prama = []
-      const leffBottom = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftBottomParam)
-      const reqArr = [leffTop, leffBottom]
+      // const leftBottomParam: Prama = []
+      // const leffBottom = requestPostData<Prama, ResData[], unknown>(encodeUrl, leftBottomParam)
+
+      const reqArr = [leffTop]
+
       handleAllDataRequest(t_this, reqArr, providerList, encodeMap)
     })
     .catch((e) => {
+      console.log(e)
       _this.$message.error('指标加载失败,请刷新重试！')
     })
     .finally(() => {
