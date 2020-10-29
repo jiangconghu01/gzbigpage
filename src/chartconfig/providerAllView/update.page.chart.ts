@@ -44,20 +44,6 @@ type Prama = ResData[]
 //left-top图表请求数据逻辑
 function handleLeftTopChart(resData: AxiosResponse<ResponseBody>) {
   const config = pageChartsConfig.providerAllView.child['all-view-left-top']
-  config.series[0].data = [
-    {
-      value: 7.59,
-      name: 'xxx'
-    },
-    {
-      value: 2.41,
-      name: 'xx'
-    },
-    {
-      value: 0,
-      name: 'eee'
-    }
-  ]
   console.log(resData)
 }
 

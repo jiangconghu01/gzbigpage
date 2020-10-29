@@ -113,7 +113,7 @@ export default defineComponent({
       const routelist: string[] = Object.keys(Titles)
       const currentIndex: number = routelist.indexOf(route.name as string)
       const toPage: string = currentIndex + 1 > 2 ? routelist[0] : routelist[currentIndex + 1]
-      router.push({ name: toPage })
+      router.push({ name: toPage, params: { userId: 123 } })
     }
     //监听全局的参数变化
     const storeDate: ComputedRef<string> = computed(() => store.state.selectDate)

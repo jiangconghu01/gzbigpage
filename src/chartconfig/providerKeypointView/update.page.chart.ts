@@ -46,7 +46,7 @@ type Prama = ResData[]
 
 //left-top 图表的数据更新逻辑
 function handleLeftTopChart(resData: AxiosResponse<ResponseBody>, providerList: any, encodeList: any) {
-  const providerListRqu: any = providerList.data.data.map((ele: any) => ele.gysmc)
+  const providerListRqu: any = providerList.data.data.map((ele: any) => ele.gysjc)
   const config = pageChartsConfig.providerKeypointView.child['keypoint-view-top-left']
   //纵坐标数据
   config.yAxis.data = providerListRqu

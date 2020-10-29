@@ -11,6 +11,7 @@ export default createStore({
     cityCode: 'A52',
     selectDate: defDate,
     buniessType: 'all',
+    detailTabledate: {},
     isLoading: false
   },
   getters: {
@@ -33,6 +34,9 @@ export default createStore({
     setBuniessType(state, type: string) {
       state.buniessType = type
       window.sessionStorage.setItem('buniessType', type)
+    },
+    setDetailTabledate(state, data: Record<string, string>[]) {
+      state.detailTabledate = data
     },
     setIsLoading(state, load: boolean) {
       state.isLoading = load
