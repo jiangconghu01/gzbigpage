@@ -29,7 +29,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import inintCharts from '../chartconfig/installchart'
+import { inintCharts } from '../chartconfig/installchart'
 export default defineComponent({
   name: '',
   setup() {

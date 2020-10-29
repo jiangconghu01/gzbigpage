@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios'
 import { pageChartsConfig } from '../installchart'
 import { getDatesParams } from '../../utils/commFun'
 import store from '../../store/index'
+import { inintChartsUpdate } from '../installchart'
 // import { encodeUrl } from '../static'
 //取供应商接口
 const getProvider = '/bigScreen/guiz/supplierIndexData/supplierList'
@@ -17,6 +18,7 @@ interface ResData {
   ywlx: string
   gysbm: string
   idxCde: string
+  idxCode?: string
   gysmc?: string
   idxValue?: string
   xh?: string
@@ -36,6 +38,9 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
     .then(([resLeffTop, resLeffBottom]) => {
       _this.$message.success('数据加载成功！')
       handleTopLeftChart(resLeffTop)
+      setTimeout(() => {
+        inintChartsUpdate('providerDetailView')
+      }, 0)
     })
     .catch((err) => {
       _this.$message.error(err)

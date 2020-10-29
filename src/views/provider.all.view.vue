@@ -63,7 +63,7 @@ import { defineComponent, ref, onMounted, getCurrentInstance, ComponentInternalI
 import { OneArgVoidFun } from '../utils/commFun'
 import echarts from 'echarts'
 import mapConfig from '../chartconfig/map'
-import inintCharts from '../chartconfig/installchart'
+import { inintCharts } from '../chartconfig/installchart'
 // import gzMapJson from 'echarts/map/json/province/guizhou.json'
 const gzMapJson = require('echarts/map/json/province/guizhou.json')
 export default defineComponent({
