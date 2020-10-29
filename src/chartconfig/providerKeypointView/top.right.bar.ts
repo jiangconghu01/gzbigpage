@@ -1,4 +1,10 @@
 const option = {
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
   grid: {
     top: '12%',
     left: '1%',
@@ -18,31 +24,29 @@ const option = {
     itemHeight: 15,
     data: ['法律诉讼', '经营异常', '行政处罚']
   },
-  xAxis: [
-    {
-      axisLabel: {
+  xAxis:{
+    axisLabel: {
+      color: '#398FD1'
+    },
+    axisLine: {
+      lineStyle: {
+        color: '#183888'
+      }
+    },
+    axisTick: {
+      alignWithLabel: true,
+      lineStyle: {
+        width: 2,
         color: '#398FD1'
-      },
-      axisLine: {
-        lineStyle: {
-          color: '#183888'
-        }
-      },
-      axisTick: {
-        alignWithLabel: true,
-        lineStyle: {
-          width: 2,
-          color: '#398FD1'
-        }
-      },
-      splitLine: {
-        lineStyle: {
-          color: '#183888'
-        }
-      },
-      data: ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月']
-    }
-  ],
+      }
+    },
+    splitLine: {
+      lineStyle: {
+        color: '#183888'
+      }
+    },
+    data: ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月']
+  },
   yAxis: {
     axisTick: {
       show: false

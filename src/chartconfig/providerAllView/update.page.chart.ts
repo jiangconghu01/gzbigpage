@@ -42,22 +42,22 @@ interface ResData {
 type Prama = ResData[]
 
 //left-top图表请求数据逻辑
-function handleLeftTopChart(resData: AxiosResponse<ResponseBody>) {
+function handleLeftTopChart(resData: AxiosResponse<ResponseBody>,pageAllviewEncode:any) {
   const config = pageChartsConfig.providerAllView.child['all-view-left-top']
-  config.series[0].data = [
-    {
-      value: 7.59,
-      name: 'xxx'
-    },
-    {
-      value: 2.41,
-      name: 'xx'
-    },
-    {
-      value: 0,
-      name: 'eee'
-    }
-  ]
+  // config.series[0].data = [
+  //   {
+  //     value: 7.59,
+  //     name: 'xxx'
+  //   },
+  //   {
+  //     value: 2.41,
+  //     name: 'xx'
+  //   },
+  //   {
+  //     value: 0,
+  //     name: 'eee'
+  //   }
+  // ]
   console.log(resData)
 }
 
@@ -69,15 +69,25 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
   //图1用原来接口，先请求该图对应指标
-  let pageAllviewEncode
+  let pageAllviewEncode:any
   try {
     pageAllviewEncode = await requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2001', chnlType: '00' })
   } catch (error) {
     _this.$message.error('指标加载失败,请刷新重试！')
   }
   //left-top图表请求数据逻辑
-  const leftTopParam: Prama = []
-  const leffTop = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leftTopParam)
+  let encondelefttop
+  let chartCode
+  if(pageAllviewEncode){
+    encondelefttop = pageAllviewEncode.data.data[0].idxs.map((ele:any) => ele.idxCde)
+    chartCode = pageAllviewEncode.data.data[0].chartCode
+  }
+  // const encodetopleft = t.data.map((v: any) => v.idxCde)
+  const paramLeftTop = JSON.parse(getDatesParams([date], [citycode], encondelefttop as string[],  businesstype,chartCode))
+  // const leftTopParam: Prama = JSON.parse(p)
+  const leffTop = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, paramLeftTop)
+
+
   //left-bottom图表请求数据逻辑
   const leffBottomParam: Prama = []
   const leffBottom = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leffBottomParam)
@@ -87,7 +97,7 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
   Promise.all(reqArr)
     .then(([resLeffTop, resLeffBottom]) => {
       _this.$message.success('数据加载成功！')
-      handleLeftTopChart(resLeffTop)
+      handleLeftTopChart(resLeffTop,pageAllviewEncode)
       setTimeout(() => {
         inintChartsUpdate('providerAllView')
       }, 0)
