@@ -70,7 +70,7 @@
       <div class="chart-box" id="all-view-center-bottom"></div>
     </div>
     <div class="right-top frame-back-box">
-      <h2 class="chart-title keypoint_part" @click="showModalTable('keypoint_part')">重点供应商在整个公司的占比堆积图</h2>
+      <h2 class="chart-title keypoint_part">重点供应商在整个公司的占比堆积图</h2>
       <div class="chart-box" id="all-view-right-top"></div>
     </div>
     <div class="right-bottom frame-back-box">
