@@ -55,7 +55,7 @@ export default defineComponent({
     const zhLocale = ref<Record<string, any>>(locale)
     const dateFmater: dateFmater = 'YYYY-MM'
     const curDate = new Date()
-    const defDate = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '-12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + curDate.getMonth() + 1 : '-0' + (curDate.getMonth() + 1))
+    const defDate = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '-12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + (curDate.getMonth() + 1) : '-0' + (curDate.getMonth() + 1))
     const handleDateChange: OneArgVoidFun<moment.Moment> = (value: moment.Moment) => {
       const sdate = value.format('YYYY-MM')
       console.log(value)

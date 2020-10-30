@@ -40,7 +40,13 @@ interface ResData {
   idxOrd?: string
 }
 type Prama = ResData[]
-
+const typeMap: Record<string, string> = {
+  all: '00',
+  asset: '01',
+  cost: '02',
+  income: '03',
+  other: '04'
+}
 //left-top图表请求数据逻辑
 function handleLeftTopChart(resData: AxiosResponse<ResponseBody>, pageAllviewEncode: ViewEEncodeRes[]) {
   const config = pageChartsConfig.providerAllView.child['all-view-left-top']
@@ -66,13 +72,7 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
   const date = '2020-07'
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
-  const typeMap: Record<string, string> = {
-    all: '00',
-    asset: '01',
-    cost: '02',
-    income: '03',
-    other: '04'
-  }
+
   try {
     //图1用原来接口，先请求该图对应指标
     const pageAllviewEncode = await requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2001', chnlType: typeMap[businesstype] })
@@ -114,5 +114,25 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
     _this.$message.error('指标加载失败,请刷新重试！')
   }
 }
-
-export { updateProviderAllView }
+//重点页面饼图加载，采用老的指标取值方式，所以写在第一个页面
+function updatePage2PieData() {
+  const date = '2020-07'
+  const citycode = store.state.cityCode
+  const businesstype = store.state.buniessType
+  requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2002', chnlType: typeMap[businesstype] }).then((res) => {
+    const update2pie = res.data.data[0].idxs.map((ele: EncodeType) => ele.idxCde)
+    const chartCode = res.data.data[0].chartCode
+    const update2pieParam = JSON.parse(getDatesParams([date], [citycode], update2pie, businesstype, chartCode))
+    requestPostData<Prama, ResponseBody, unknown>(encodeUrl, update2pieParam).then((resData) => {
+      const config = pageChartsConfig.providerKeypointView.child['keypoint-view-bottom-left']
+      const label = ['房地产', '汽车', '通讯设备', '土木工程', '软件和技术服务', '批发']
+      config.series[0].data = resData.data.data.map((val: ResData, index) => {
+        return {
+          name: label[index],
+          value: val.idxValue
+        }
+      })
+    })
+  })
+}
+export { updateProviderAllView, updatePage2PieData }

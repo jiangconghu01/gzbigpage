@@ -4,8 +4,10 @@
   </a-modal>
 </template>
 
-<script>
-import { defineComponent, watch, watchEffect, ref } from 'vue'
+<script lang="ts">
+import { defineComponent, watch, watchEffect, ref, computed, getCurrentInstance } from 'vue'
+import { requestPostData } from '../../http/http'
+import store from '../../store'
 export default defineComponent({
   name: 'userModalTable',
   props: {
@@ -20,6 +22,9 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    //this对象
+    const instance = getCurrentInstance() //vue的this实例
+    const _this = instance.appContext.config.globalProperties //全局对象属性
     //显示弹框
     const show = ref(false)
     const pageType = ref('')
@@ -28,9 +33,14 @@ export default defineComponent({
       show.value = isShowTabe
       pageType.value = type
     })
-    watch(show, (nval, oval) => {
-      context.emit('change', nval)
+    //请求弹框内容
+    const date = computed(() => {
+      return store.state.selectDate
     })
+    const cityCode = computed(() => {
+      return store.state.cityCode
+    })
+
     //弹框数据
     const columns = [
       {
@@ -67,6 +77,19 @@ export default defineComponent({
         address3: `London, Park Lane no. ${i}`
       })
     }
+    watch(show, (nval, oval) => {
+      context.emit('change', nval)
+      const type = pageType.value
+      if (type === 'provider_num') {
+        requestPostData('/bigScreen/guiz/popup/supplierList', { accountCode: cityCode.value, monthId: '2020-07' })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            _this.$message.error('数据加载失败！')
+          })
+      }
+    })
     return {
       show,
       columns,

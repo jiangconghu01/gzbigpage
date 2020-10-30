@@ -70,7 +70,7 @@
       <div class="chart-box" id="all-view-center-bottom"></div>
     </div>
     <div class="right-top frame-back-box">
-      <h2 class="chart-title">重点供应商在整个公司的占比堆积图</h2>
+      <h2 class="chart-title keypoint_part" @click="showModalTable('keypoint_part')">重点供应商在整个公司的占比堆积图</h2>
       <div class="chart-box" id="all-view-right-top"></div>
     </div>
     <div class="right-bottom frame-back-box">
@@ -159,6 +159,25 @@ export default defineComponent({
     top: 0;
     width: 455px;
     height: 460px;
+    .keypoint_part {
+      position: relative;
+      cursor: pointer;
+      &:hover {
+        color: transparent;
+        -webkit-background-clip: text;
+        background-image: -webkit-linear-gradient(bottom, #17d3ba, #afebf7);
+      }
+      &:hover::after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 80%;
+        background-color: #17d3ba;
+        left: 6%;
+        bottom: 8px;
+      }
+    }
   }
   .right-bottom {
     right: 0;
