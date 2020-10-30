@@ -24,7 +24,25 @@ const option = {
       center: ['50%', '50%'],
       label: {
         show: true,
-        formatter: '{d}%'
+        // formatter: function (params: any) {
+        //   return (params.value) * 100 + '%' + '\n' + params.name
+        // },
+        "formatter": "{per|{d}%} \n {b|{b}}  ",
+        rich:{
+          b:{
+            color:'#C6EBFA'
+          }
+        },
+        textStyle: {
+          fontSize: 14,
+          color: '#4FFFE4'
+        },
+        position: 'outside'
+      },
+      labelLine: {
+        lineStyle: {
+          color: '#fff'
+        }
       },
       emphasis: {
         label: {
