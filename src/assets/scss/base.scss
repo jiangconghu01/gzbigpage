@@ -142,7 +142,6 @@ body {
       width: 50%;
       height: 100%;
       background: url('../box_back.jpg') no-repeat;
-      background-size: cover;
       z-index: -1;
     }
     &::after{
@@ -155,8 +154,10 @@ body {
       height: 100%;
       background: url('../box_back.jpg') no-repeat;
       background-position-x: right;
-      background-size: cover;
       z-index: -1;
+    }
+    &::before,&::after{
+        background-size: cover;
     }
     //设置title
     display: flex;

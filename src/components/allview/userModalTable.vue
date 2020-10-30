@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, watchEffect, ref, computed, getCurrentInstance } from 'vue'
+import { defineComponent, watch, watchEffect, ref, computed, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { requestPostData } from '../../http/http'
 import store from '../../store'
 export default defineComponent({
@@ -23,7 +23,7 @@ export default defineComponent({
   },
   setup(props, context) {
     //this对象
-    const instance = getCurrentInstance() //vue的this实例
+    const instance = getCurrentInstance() as ComponentInternalInstance //vue的this实例
     const _this = instance.appContext.config.globalProperties //全局对象属性
     //显示弹框
     const show = ref(false)
