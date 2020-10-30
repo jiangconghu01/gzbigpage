@@ -44,38 +44,61 @@ type Prama = ResData[]
 //left-top图表请求数据逻辑
 function handleLeftTopChart(resData: AxiosResponse<ResponseBody>, pageAllviewEncode: ViewEEncodeRes[]) {
   const config = pageChartsConfig.providerAllView.child['all-view-left-top']
-  console.log(resData.data.data)
+  const label = ['成本类', '工程采购类', '合作分成类', '其他']
+  config.series[0].data = resData.data.data.map((val: ResData, index) => {
+    return {
+      name: label[index],
+      value: val.idxValue
+    }
+  })
+}
+//top-all总体指标
+function handleLeftTopAll(resData: AxiosResponse<ResponseBody>, pageAllviewEncode: ViewEEncodeRes[]) {
+  const data: Record<string, any>[] = resData.data.data
+  store.commit('setAllviewItems', data)
+  //   console.log(resData.data.data)
 }
 
 //统一请求函数
 const updateProviderAllView = async (_this: Record<string, any>) => {
   //全局统一参数
   // const date = store.state.selectDate
-  const date = '202007'
+  const date = '2020-07'
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
-
+  const typeMap: Record<string, string> = {
+    all: '00',
+    asset: '01',
+    cost: '02',
+    income: '03',
+    other: '04'
+  }
   try {
     //图1用原来接口，先请求该图对应指标
-    const pageAllviewEncode = await requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2001', chnlType: '00' })
+    const pageAllviewEncode = await requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2001', chnlType: typeMap[businesstype] })
     //left-top图表请求数据逻辑
     const encondelefttop = pageAllviewEncode.data.data[0].idxs.map((ele: EncodeType) => ele.idxCde)
     const chartCode = pageAllviewEncode.data.data[0].chartCode
-
     const paramLeftTop = JSON.parse(getDatesParams([date], [citycode], encondelefttop, businesstype, chartCode))
-    // const leftTopParam: Prama = JSON.parse(p)
     const leffTop = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, paramLeftTop)
 
-    //left-bottom图表请求数据逻辑
-    const leffBottomParam: Prama = []
-    const leffBottom = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leffBottomParam)
+    //中间总体指标
+    const encondetopall = pageAllviewEncode.data.data[1].idxs.map((ele: EncodeType) => ele.idxCde)
+    const chartCodeTopAll = pageAllviewEncode.data.data[1].chartCode
+    const paramTopAll = JSON.parse(getDatesParams([date], [citycode], encondetopall, businesstype, chartCodeTopAll))
+    const topAll = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, paramTopAll)
+
+    //right-top图表请求数据逻辑
+    const rightParam: Prama = []
+    const rightTopPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, rightParam)
 
     //请求实际数据的promise数组
-    const reqArr = [leffTop, leffBottom]
+    const reqArr = [leffTop, topAll]
     Promise.all(reqArr)
-      .then(([resLeffTop, resLeffBottom]) => {
+      .then(([resLeffTop, topAll]) => {
         _this.$message.success('数据加载成功！')
         handleLeftTopChart(resLeffTop, pageAllviewEncode.data.data)
+        handleLeftTopAll(topAll, pageAllviewEncode.data.data)
         setTimeout(() => {
           inintChartsUpdate('providerAllView')
         }, 0)

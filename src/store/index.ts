@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 export type PageType = 'allview' | 'detailview' | 'keypointview'
 const curDate: Date = new Date()
-const defDate: string = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? curDate.getMonth() + 1 + '' : '0' + (curDate.getMonth() + 1))
+const defDate: string = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '-12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + curDate.getMonth() + 1 : '-0' + (curDate.getMonth() + 1))
 window.sessionStorage.setItem('cityCode', 'A52')
 window.sessionStorage.setItem('selectDate', defDate)
 window.sessionStorage.setItem('buniessType', 'all')
@@ -12,6 +12,7 @@ export default createStore({
     selectDate: defDate,
     buniessType: 'all',
     detailTabledate: {},
+    allviewItems: {},
     isLoading: false
   },
   getters: {
@@ -37,6 +38,9 @@ export default createStore({
     },
     setDetailTabledate(state, data: Record<string, string>[]) {
       state.detailTabledate = data
+    },
+    setAllviewItems(state, data: Record<string, string>[]) {
+      state.allviewItems = data
     },
     setIsLoading(state, load: boolean) {
       state.isLoading = load

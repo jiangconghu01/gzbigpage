@@ -31,8 +31,8 @@ interface ResData {
 type Prama = ResData[]
 
 const curDate: Date = new Date()
-const defDate: string = curDate.getFullYear() + (curDate.getMonth() > 8 ? curDate.getMonth() + 1 + '' : '0' + (curDate.getMonth() + 1))
-const curentYears: number[] = [curDate.getFullYear() - 2, curDate.getFullYear() - 1, curDate.getFullYear()]
+const defDate: string = curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + curDate.getMonth() + 1 : '-0' + (curDate.getMonth() + 1))
+// const curentYears: number[] = [curDate.getFullYear() - 2, curDate.getFullYear() - 1, curDate.getFullYear()]
 //top图表的数据更新逻辑
 function handleTopTable(resData: AxiosResponse<ResponseBody>, encodeList: Record<string, any>) {
   console.log(resData, encodeList)
@@ -159,12 +159,12 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
 const updateProviderDetailView = async (_this: Record<string, any>) => {
   //全局统一参数
   // const date = store.state.selectDate
-  const date = '202007'
+  const date = '2020-07'
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
   console.log(_this.$route.params)
   //   const currentProvider = _this.$route.params.provider
-  const currentProvider = { accountCode: 'A52', gysbm: 'G000117879', gysjc: '贵通服', gysmc: '贵州省通信产业服务有限公司', monthId: '202007', xh: '1', ywlx: 'all' }
+  const currentProvider = { accountCode: 'A52', gysbm: 'G000117879', gysjc: '贵通服', gysmc: '贵州省通信产业服务有限公司', monthId: '2020-07', xh: '1', ywlx: 'all' }
   let providerList: AxiosResponse<unknown>
   try {
     //请求供应商编码和名称
@@ -216,7 +216,7 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
       const encodebottomright = encode06.data.data.map((val) => val.idxCde)
       const dateList: string[] = Array.from({ length: 12 }, (v, k) => {
         const d = k + 1 > 9 ? k + 1 : '0' + (k + 1)
-        return curDate.getFullYear() + '' + d
+        return curDate.getFullYear() + '-' + d
       })
       const encodeBottomRightParam: Prama = JSON.parse(getDatesParamsNew(dateList, [citycode], encodebottomright, [currentProvider.gysbm], businesstype))
       const bottomRightPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, encodeBottomRightParam)

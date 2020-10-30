@@ -13,29 +13,53 @@
         <li class="item">
           <p class="text"><i>供应商总数</i> <i>需关注供应商</i></p>
           <p class="number">
-            <span class="lum-1"><i class="num">120</i><i class="unit">个</i></span>
-            <span class="lum-2 active" @click="showModalTable('provider_num')"><i class="num">120</i><i class="unit">个</i></span>
+            <span class="lum-1"
+              ><i class="num">{{ labelItems[0].idxValue }}</i
+              ><i class="unit">个</i></span
+            >
+            <span class="lum-2 active" @click="showModalTable('provider_num')"
+              ><i class="num">{{ labelItems[1].idxValue }}</i
+              ><i class="unit">个</i></span
+            >
           </p>
         </li>
         <li class="item">
           <p class="text"><i>新签合同额</i> <i>需关注合同</i></p>
           <p class="number">
-            <span class="lum-1"><i class="num">638</i><i class="unit">万</i></span>
-            <span class="lum-2 active" @click="showModalTable('contract_num')"><i class="num">2</i><i class="unit">个</i></span>
+            <span class="lum-1"
+              ><i class="num">{{ (labelItems[2].idxValue / 10000).toFixed(1) }}</i
+              ><i class="unit">万</i></span
+            >
+            <span class="lum-2 active" @click="showModalTable('contract_num')"
+              ><i class="num">{{ labelItems[3].idxValue }}</i
+              ><i class="unit">个</i></span
+            >
           </p>
         </li>
         <li class="item">
           <p class="text"><i>列账总额</i> <i>需关注列账数</i></p>
           <p class="number">
-            <span class="lum-1"><i class="num">4201</i><i class="unit">万</i></span>
-            <span class="lum-2 active" @click="showModalTable('bill_num')"><i class="num">264</i><i class="unit">万</i></span>
+            <span class="lum-1"
+              ><i class="num">{{ (labelItems[4].idxValue / 10000).toFixed(0) }}</i
+              ><i class="unit">万</i></span
+            >
+            <span class="lum-2 active" @click="showModalTable('bill_num')"
+              ><i class="num">{{ (labelItems[5].idxValue / 10000).toFixed(0) }}</i
+              ><i class="unit">万</i></span
+            >
           </p>
         </li>
         <li class="item">
           <p class="text"><i>已付金额</i> <i>余额</i></p>
           <p class="number">
-            <span class="lum-1"><i class="num">837</i><i class="unit">万</i></span>
-            <span class="lum-2"><i class="num">269</i><i class="unit">万</i></span>
+            <span class="lum-1"
+              ><i class="num">{{ (labelItems[0].idxValue / 10000).toFixed(1) }}</i
+              ><i class="unit">万</i></span
+            >
+            <span class="lum-2"
+              ><i class="num">{{ (labelItems[0].idxValue / 10000).toFixed(1) }}</i
+              ><i class="unit">万</i></span
+            >
           </p>
         </li>
       </ul>
@@ -59,11 +83,12 @@
 
 <script lang="ts">
 import userModalTable from '../components/allview/userModalTable.vue'
-import { defineComponent, ref, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
+import { defineComponent, ref, onMounted, getCurrentInstance, ComponentInternalInstance, computed } from 'vue'
 import { OneArgVoidFun } from '../utils/commFun'
 import echarts from 'echarts'
 import mapConfig from '../chartconfig/map'
 import { inintCharts } from '../chartconfig/installchart'
+import store from '../store'
 // import gzMapJson from 'echarts/map/json/province/guizhou.json'
 const gzMapJson = require('echarts/map/json/province/guizhou.json')
 export default defineComponent({
@@ -72,6 +97,10 @@ export default defineComponent({
     userModalTable
   },
   setup(props, context) {
+    //头部的一排label值
+    const labelItems = computed(() => {
+      return store.state.allviewItems
+    })
     //显示弹框内容，业务写在弹框的业务组件里
     const showTable = ref(false)
     const tableType = ref('')
@@ -101,7 +130,8 @@ export default defineComponent({
       showTable,
       tableType,
       showModalTable,
-      showStatusChange
+      showStatusChange,
+      labelItems
     }
   }
 })
