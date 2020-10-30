@@ -2,18 +2,22 @@ const option = {
   tooltip: {
     trigger: 'axis',
     axisPointer: {
-      // 坐标轴指示器，坐标轴触发有效
-      type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-    }
+      lineStyle: {
+        color: '#96B2CC'
+      },
+    },
+    
   },
   legend: {
+    right: '10%',
+    top: '2%',
     textStyle: {
       color: '#C7EBF9',
       fontSize: 14
     },
     itemWidth: 15,
     itemHeight: 15,
-    data: ['实缴资本', '实收资本','资本差异']
+    data: ['实缴资本', '实收资本', '资本差异']
   },
   grid: {
     left: '3%',
@@ -21,32 +25,33 @@ const option = {
     bottom: '3%',
     containLabel: true
   },
-  xAxis:{
-      axisLabel: {
-        interval:0, //强制显示文字
-        color: '#398FD1'
-      },
-      axisLine: {
-        lineStyle: {
-          color: '#183888'
-        }
-      },
-      axisTick: {
-        alignWithLabel: true,
-        lineStyle: {
-          width: 2,
-          color: '#398FD1'
-        }
-      },
-      splitLine: {
-        lineStyle: {
-          color: '#183888'
-        }
-      },
-      data: ['菜鸟网络', '长亭科技', '字节跳动', '字节跳动', '字节跳动', '字节跳动', '字节跳动']
+  xAxis: {
+    axisLabel: {
+      interval: 0, //强制显示文字
+      color: '#398FD1'
     },
+    axisLine: {
+      lineStyle: {
+        color: '#183888'
+      }
+    },
+    axisTick: {
+      alignWithLabel: true,
+      lineStyle: {
+        width: 2,
+        color: '#398FD1'
+      }
+    },
+    splitLine: {
+      lineStyle: {
+        color: '#183888'
+      }
+    },
+    data: ['菜鸟网络', '长亭科技', '字节跳动', '字节跳动', '字节跳动', '字节跳动', '字节跳动']
+  },
   yAxis: [
     {
+      name:'单位：百万元',
       axisTick: {
         show: false
       },
@@ -62,11 +67,14 @@ const option = {
       },
       axisLine: {
         //坐标轴轴线相关设置。数学上的x轴
-        show: false
+        show: false,
+        lineStyle: {
+          color: '#C9EFFA'
+        }
       }
     }
   ],
-  color: ['#58ABF1', '#F4962F','#F2DA32'],
+  color: ['#58ABF1', '#F4962F', '#F2DA32'],
   series: [
     {
       name: '实缴资本',

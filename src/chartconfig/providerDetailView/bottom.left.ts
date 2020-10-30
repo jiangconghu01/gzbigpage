@@ -4,7 +4,10 @@ const option = {
     trigger: 'axis',
     axisPointer: {
       type: 'shadow'
-    }
+    },
+    // formatter:function(params:any){
+    //   return params +'万元'
+    // },
   },
   xAxis: {
     axisTick: {
@@ -35,6 +38,7 @@ const option = {
       }
     },
     axisLabel: {
+      formatter:'{value}',
       textStyle: {
         color: '#398FD1'
       }

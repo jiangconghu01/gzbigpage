@@ -64,7 +64,55 @@ function handleLeftTopAll(resData: AxiosResponse<ResponseBody>, pageAllviewEncod
   store.commit('setAllviewItems', data)
   //   console.log(resData.data.data)
 }
-
+//right-top图表请求数据逻辑
+function handleRightTopChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+  const config = pageChartsConfig.providerAllView.child['all-view-right-top']
+  const label = ['新签合同额', '列账', '付款', '余额']
+  const x:string[] = []
+  const y:string[] = []
+  resData.data.data.map((val: ResData, index) => {
+    if(Number(val.idxOrd) % 2 !==  0){
+      x.push(val.idxValue as string)
+    }else{
+      y.push(val.idxValue as string)
+    }
+  })
+  config.series[0].data = x
+  config.series[1].data = y
+}
+//left-bootom图表请求数据逻辑
+function handleLeftBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+  const config = pageChartsConfig.providerAllView.child['all-view-left-bottom']
+  const label = ['房地产', '汽车', '通讯设备', '土木工程', '软件和技术服务', '批发占比']
+  config.series[0].data = resData.data.data.map((val: ResData, index) => {
+    return {
+      name: label[index],
+      value: val.idxValue
+    }
+  })
+}
+//center-bootom图表请求数据逻辑
+function handleCenterBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+  const config = pageChartsConfig.providerAllView.child['all-view-center-bottom']
+  const label = ['公开招标', '邀请招标', '单一采购（公示）', '邀请询价', '邀请竞争谈判', '公开比选', '公开询价', '单一采购（非公示）', '公开竞争谈判', '电商采购']
+  config.series[0].data = resData.data.data.map((val: ResData, index) => {
+    return {
+      name: label[index],
+      value: val.idxValue
+    }
+  })
+}
+//right-bootom图表请求数据逻辑
+function handleRightBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+  const config = pageChartsConfig.providerAllView.child['all-view-right-bottom']
+  const label = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+  config.series[0].data = resData.data.data.map((val: ResData, index) => {
+    return {
+      name: label[index],
+      value: val.idxValue
+    }
+  })
+}
 //统一请求函数
 const updateProviderAllView = async (_this: Record<string, any>) => {
   //全局统一参数
@@ -89,16 +137,45 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
     const topAll = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, paramTopAll)
 
     //right-top图表请求数据逻辑
-    const rightParam: Prama = []
+    const enconderighttop = pageAllviewEncode.data.data[3].idxs.map((ele: EncodeType) => ele.idxCde)
+    const chartCodeRightTop = pageAllviewEncode.data.data[3].chartCode
+    const rightParam: Prama = JSON.parse(getDatesParams([date], [citycode], enconderighttop, businesstype, chartCodeRightTop))
     const rightTopPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, rightParam)
 
+    //left-bottom图表请求数据逻辑
+    const encondeleftbottom = pageAllviewEncode.data.data[4].idxs.map((ele: EncodeType) => ele.idxCde)
+    const chartCodeLeftBottom = pageAllviewEncode.data.data[4].chartCode
+    const leftBottomParam: Prama = JSON.parse(getDatesParams([date], [citycode], encondeleftbottom, businesstype, chartCodeLeftBottom))
+    const leftBottomPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, leftBottomParam)
+
+    //center-bottom图表请求数据逻辑
+    const encondecenterbottom = pageAllviewEncode.data.data[5].idxs.map((ele: EncodeType) => ele.idxCde)
+    const chartCodeCenterBottom = pageAllviewEncode.data.data[5].chartCode
+    const centerBottomParam: Prama = JSON.parse(getDatesParams([date], [citycode], encondecenterbottom, businesstype, chartCodeCenterBottom))
+    const centerBottomPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, centerBottomParam)
+
+    //right-bottom图表请求数据逻辑
+    const curDate: Date = new Date()
+    const dateList: string[] = Array.from({ length: 12 }, (v, k) => {
+      const d = k + 1 > 9 ? k + 1 : '0' + (k + 1)
+      return curDate.getFullYear() + '-' + d
+    })
+    const enconderightbottom = pageAllviewEncode.data.data[6].idxs.map((ele: EncodeType) => ele.idxCde)
+    const chartCodeRightBottom = pageAllviewEncode.data.data[6].chartCode
+    const rightBottomParam: Prama = JSON.parse(getDatesParams(dateList, [citycode], enconderightbottom, businesstype, chartCodeRightBottom))
+    const rightBottomPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, rightBottomParam)
+
     //请求实际数据的promise数组
-    const reqArr = [leffTop, topAll]
+    const reqArr = [leffTop, topAll, rightTopPro, leftBottomPro, centerBottomPro, rightBottomPro]
     Promise.all(reqArr)
-      .then(([resLeffTop, topAll]) => {
+      .then(([resLeffTop, topAll, rightTopPro, leftBottomPro, centerBottomPro, rightBottomPro]) => {
         _this.$message.success('数据加载成功！')
         handleLeftTopChart(resLeffTop, pageAllviewEncode.data.data)
         handleLeftTopAll(topAll, pageAllviewEncode.data.data)
+        handleRightTopChart(rightTopPro, pageAllviewEncode.data.data)
+        handleLeftBottomChart(leftBottomPro, pageAllviewEncode.data.data)
+        handleCenterBottomChart(centerBottomPro, pageAllviewEncode.data.data)
+        handleRightBottomChart(rightBottomPro, pageAllviewEncode.data.data)
         setTimeout(() => {
           inintChartsUpdate('providerAllView')
         }, 0)
