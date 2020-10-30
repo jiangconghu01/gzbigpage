@@ -57,8 +57,8 @@ export function getDatesParams(dates: string[], cityCodeArr: string[], encodeArr
       const element = cityCodeArr[index]
       for (let i = 0, len2 = encodeArray.length; i < len2; i++) {
         const ele = encodeArray[i]
-        paramStr += '{"idxCde":"' + ele + '","chnlType":"' + type + '","chartCode":"' + chartCode +'","accountCode":"' + element + '","periodDate":"' + date + '","rptType":"1' + '"},'
-      }//chartCode
+        paramStr += '{"idxCde":"' + ele + '","chnlType":"' + type + '","chartCode":"' + chartCode + '","accountCode":"' + element + '","periodDate":"' + date + '","rptType":"1' + '"},'
+      }
     }
   }
   paramStr = paramStr.substring(0, paramStr.length - 1)

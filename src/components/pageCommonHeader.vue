@@ -39,7 +39,7 @@ import moment from 'moment'
 import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
-type dateFmater = 'YYYYMM' | 'YYYYMM/DD'
+type dateFmater = 'YYYY-MM' | 'YYYYMM/DD' | 'YYYYMM'
 import { updateProviderAllView } from '../chartconfig/providerAllView/update.page.chart'
 import { updateProviderDetailView } from '../chartconfig/providerDetailView/update.page.chart'
 import { updateProviderKeypointView } from '../chartconfig/providerKeypointView/update.page.chart'
@@ -53,11 +53,11 @@ export default defineComponent({
     //时间选择
     const dateValue = ref<Date>(new Date())
     const zhLocale = ref<Record<string, any>>(locale)
-    const dateFmater: dateFmater = 'YYYYMM'
+    const dateFmater: dateFmater = 'YYYY-MM'
     const curDate = new Date()
-    const defDate = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? curDate.getMonth() + 1 + '' : '0' + (curDate.getMonth() + 1))
+    const defDate = curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '-12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + (curDate.getMonth() + 1) : '-0' + (curDate.getMonth() + 1))
     const handleDateChange: OneArgVoidFun<moment.Moment> = (value: moment.Moment) => {
-      const sdate = value.format('YYYYMM')
+      const sdate = value.format('YYYY-MM')
       console.log(value)
       store.commit('setSelectDate', sdate)
     }
@@ -113,7 +113,7 @@ export default defineComponent({
       const routelist: string[] = Object.keys(Titles)
       const currentIndex: number = routelist.indexOf(route.name as string)
       const toPage: string = currentIndex + 1 > 2 ? routelist[0] : routelist[currentIndex + 1]
-      router.push({ name: toPage })
+      router.push({ name: toPage, params: { userId: 123 } })
     }
     //监听全局的参数变化
     const storeDate: ComputedRef<string> = computed(() => store.state.selectDate)

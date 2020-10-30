@@ -4,6 +4,7 @@ import { pageChartsConfig } from '../installchart'
 import { getDatesParams, getDatesParamsNew } from '../../utils/commFun'
 import store from '../../store/index'
 import { inintChartsUpdate } from '../installchart'
+import { updatePage2PieData } from '../providerAllView/update.page.chart'
 // import { encodeUrl } from '../static'
 //取供应商接口
 const getProvider = '/bigScreen/guiz/supplierIndexData/supplierList'
@@ -201,7 +202,7 @@ function handleBtRightChart(resData: AxiosResponse<ResponseBody>, providerList: 
 
 function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResponseBody>>[], providerList: any, encodeList: Record<string, any>) {
   Promise.all(reqArr)
-    .then(([resLeffTop,resRightTop,resBtCenter,resBtRight]) => {
+    .then(([resLeffTop, resRightTop, resBtCenter, resBtRight]) => {
       _this.$message.success('数据加载成功！')
       handleLeftTopChart(resLeffTop, providerList, encodeList)
       handleRightTopChart(resRightTop, providerList, encodeList)
@@ -226,7 +227,7 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
 // const date = window.sessionStorage.getItem("selectDate") as string
 
 const updateProviderKeypointView = async (_this: Record<string, any>) => {
-  const date = '202007'
+  const date = '2020-07'
   const citycode = store.getters.getCityCode
   const businesstype = store.state.buniessType
   let providerList: AxiosResponse<ResponseBody>
@@ -237,6 +238,8 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
   } catch (error) {
     _this.$message.error('供应商编码加载失败,请刷新重试！')
   }
+  //旧的指标加载饼图的数据
+  updatePage2PieData()
   //获取该页面所有图表的指标编码
 
   Promise.all([
@@ -246,7 +249,7 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
     requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0204' }),
     requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0205' })
   ])
-    .then(([encode01, encode02,encode04,encode05]) => {
+    .then(([encode01, encode02, encode04, encode05]) => {
       const t_this = _this
       const encodeMap = {
         encode01,
@@ -287,7 +290,7 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
       const btRightParam: Prama = JSON.parse(p5)
       const btRight = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, btRightParam)
 
-      const reqArr = [leffTop,rightTop,btCenter,btRight]
+      const reqArr = [leffTop, rightTop, btCenter, btRight]
       handleAllDataRequest(t_this, reqArr, providerList, encodeMap)
     })
     .catch((e) => {
