@@ -1,5 +1,4 @@
 import echarts from 'echarts'
-
 const option = {
   tooltip: {
     trigger: 'axis',

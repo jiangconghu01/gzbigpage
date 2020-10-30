@@ -14,7 +14,7 @@ const option = {
   color: ['#D55CE7', '#6B51FE', '#E85089', '#AD6BE7', '#F5952F', '#58ABF1', '#F2DA32', '#16D4D2'],
   tooltip: {
     trigger: 'item',
-    formatter: '{a} <br/>{b} : {c} ({d}%)'
+    formatter: '{a} <br/>{b} : {d}%'
   },
   series: [
     {
