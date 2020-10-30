@@ -1,4 +1,10 @@
 const option = {
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
   grid: {
     top: '12%',
     left: '1%',
