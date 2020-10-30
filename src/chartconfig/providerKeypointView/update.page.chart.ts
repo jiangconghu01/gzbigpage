@@ -4,6 +4,7 @@ import { pageChartsConfig } from '../installchart'
 import { getDatesParams, getDatesParamsNew } from '../../utils/commFun'
 import store from '../../store/index'
 import { inintChartsUpdate } from '../installchart'
+import { updatePage2PieData } from '../providerAllView/update.page.chart'
 // import { encodeUrl } from '../static'
 //取供应商接口
 const getProvider = '/bigScreen/guiz/supplierIndexData/supplierList'
@@ -237,6 +238,8 @@ const updateProviderKeypointView = async (_this: Record<string, any>) => {
   } catch (error) {
     _this.$message.error('供应商编码加载失败,请刷新重试！')
   }
+  //旧的指标加载饼图的数据
+  updatePage2PieData()
   //获取该页面所有图表的指标编码
 
   Promise.all([
