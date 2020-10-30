@@ -73,7 +73,7 @@ function handleCenterLeft(resData: AxiosResponse<ResponseBody>, encodeList: Reco
       stack: 'y',
       data: [] as any
     }
-    const data = resData.data.data.filter((ele) => ele.idxCode === val.idxCde)
+    const data = resData.data.data ? resData.data.data.filter((ele) => ele.idxCode === val.idxCde) : []
     const data2 = data.map((e) => {
       const t: any = e
       t.value = e.idxValue
@@ -115,7 +115,7 @@ function handleBottomLeft(resData: AxiosResponse<ResponseBody>, encodeList: Reco
 }
 //处理bottom-right
 function handleBottomRight(resData: AxiosResponse<ResponseBody>, encodeList: Record<string, any>) {
-  const config = pageChartsConfig.providerDetailView.child['etail-view-bottom-right']
+  const config = pageChartsConfig.providerDetailView.child['detail-view-bottom-right']
   const encodes = encodeList['encode06'].data.data
   const encode1 = encodes[0].idxCde
   const encode2 = encodes[0].idxCde
