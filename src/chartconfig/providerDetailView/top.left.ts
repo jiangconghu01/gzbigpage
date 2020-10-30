@@ -11,8 +11,8 @@ const option = {
       color: '#C7EBF9',
       fontSize: 14
     },
-    itemWidth: 15,
-    itemHeight: 15,
+    itemWidth: 10,
+    itemHeight: 10,
     data: ['公开招标', '公开竞争性谈判', '公开比选', '单一来源采购(公示)', '单一来源采购(非公示)']
   },
   grid: {

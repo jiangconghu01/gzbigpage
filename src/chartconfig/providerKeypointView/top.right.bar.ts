@@ -14,7 +14,7 @@ const option = {
   },
   legend: {
     itemGap: 20,
-    right: '20%',
+    right: '10%',
     top: '2%',
     textStyle: {
       color: '#C7EBF9',
@@ -48,13 +48,12 @@ const option = {
     data: ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月']
   },
   yAxis: {
+    name:'单位：万元',
     axisTick: {
       show: false
     },
     axisLabel: {
-      textStyle: {
         color: '#398FD1'
-      }
     },
     splitLine: {
       lineStyle: {
@@ -63,7 +62,10 @@ const option = {
     },
     axisLine: {
       //坐标轴轴线相关设置。数学上的x轴
-      show: false
+      show: false,
+      lineStyle: {
+        color: '#C9EFFA'
+      }
     }
   },
   series: [
