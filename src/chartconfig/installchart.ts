@@ -69,4 +69,11 @@ const inintCharts: FuncPstringVoid = (page: PageName) => {
     })
   })
 }
-export default inintCharts
+const inintChartsUpdate: FuncPstringVoid = (page: PageName) => {
+  const currentPage = pageChartsConfig[page]['child']
+  Object.keys(currentPage).forEach((val: string) => {
+    const box = echarts.init(document.getElementById(val) as HTMLDivElement)
+    currentPage[val] && box.setOption(currentPage[val])
+  })
+}
+export { inintCharts, inintChartsUpdate }

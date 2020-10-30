@@ -4,10 +4,10 @@
       <h2 class="chart-title"><i>基本</i> <i>信息</i></h2>
       <ul>
         <li class="th">
-          <span class="item" v-for="item in thTexts" :key="item">{{ item }}</span>
+          <span class="item" v-for="item in tabledata" :key="item">{{ item.name }}</span>
         </li>
         <li class="td">
-          <span class="item" v-for="item in data" :key="item">{{ item }}</span>
+          <span class="item" v-for="item in tabledata" :key="item">{{ item.value }}</span>
         </li>
       </ul>
     </div>
@@ -39,18 +39,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import inintCharts from '../chartconfig/installchart'
+import { defineComponent, computed } from 'vue'
+import { inintCharts } from '../chartconfig/installchart'
+import store from '../store/index'
 export default defineComponent({
   name: '',
   setup() {
     const thTexts: string[] = ['供应商编码', '供应商名称', '法人代表', '注册资本（万）', '实缴资本（万）', '资本差异（%）', '信用信息', '法律纠纷（次）', '不良记录（笔）']
     const data: number[] = Array.from({ length: 9 }, (v, k) => k)
+    const tabledata = computed(() => {
+      return store.state.detailTabledate
+    })
+
     //挂载图表
     inintCharts('providerDetailView')
     return {
       thTexts,
-      data
+      data,
+      tabledata
     }
   }
 })

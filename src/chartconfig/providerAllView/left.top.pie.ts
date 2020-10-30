@@ -11,7 +11,7 @@ const option = {
       fontFamily: 'PingFangSC-Regular,PingFang SC;'
     }
   },
-  color: ['#F2DA32', '#16D4D2', '#AD6BE7'],
+  color: ['#F2DA32', '#16D4D2', '#AD6BE7', '#58ABF1'],
   tooltip: {
     trigger: 'item',
     textStyle: {

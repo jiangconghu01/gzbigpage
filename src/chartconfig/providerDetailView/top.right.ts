@@ -17,23 +17,23 @@ const option = {
     indicator: [
       {
         name: '应收账款周转率',
-        max: 6500
+        max: 1
       },
       {
         name: '资产负债率',
-        max: 16000
+        max: 1
       },
       {
         name: '净利润率',
-        max: 30000
+        max: 1
       },
       {
         name: '现金流量比率',
-        max: 38000
+        max: 1
       },
       {
         name: '列账金额同比率',
-        max: 52000
+        max: 1
       }
     ],
     splitArea: {
@@ -77,7 +77,7 @@ const option = {
         color: '#0755DA',
         width: 3
       },
-      data: [[4600, 13000, 25000, 23500, 25000]]
+      data: [[0.2, 0.4, 0.6, 0.7, 0.3]]
     }
   ]
 }

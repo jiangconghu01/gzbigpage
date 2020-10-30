@@ -82,12 +82,9 @@ const map: any = {
     left: 0,
     top: 0
   },
-  //   tooltip: {
-  //     trigger: "item",
-  //     formatter: function(params, ticket, callback) {
-  //       return toolTiosOfMap;
-  //     }
-  //   },
+  tooltip: {
+    trigger: "item",
+  },
   //   visualMap: {
   //     type: 'continuous',
   //     // orient: 'vertical',

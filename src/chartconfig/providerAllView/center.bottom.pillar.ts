@@ -1,4 +1,10 @@
 const option = {
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
   color: ['#16D4D2'],
   xAxis: {
     axisTick: {
