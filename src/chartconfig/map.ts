@@ -83,7 +83,10 @@ const map: any = {
     top: 0
   },
   tooltip: {
-    trigger: "item",
+    trigger: 'item',
+    formatter: function(param: any) {
+      return '<p>' + param.data.name + '</p>' + '<p>占比:' + (param.data.value * 100).toFixed(0) + '%</p>'
+    }
   },
   //   visualMap: {
   //     type: 'continuous',

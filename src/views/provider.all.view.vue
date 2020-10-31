@@ -70,7 +70,7 @@
       <div class="chart-box" id="all-view-center-bottom"></div>
     </div>
     <div class="right-top frame-back-box">
-      <h2 class="chart-title keypoint_part">重点供应商在整个公司的占比堆积图</h2>
+      <h2 class="chart-title keypoint_part" @click="toKeyPointPage()">重点供应商在整个公司的占比堆积图</h2>
       <div class="chart-box" id="all-view-right-top"></div>
     </div>
     <div class="right-bottom frame-back-box">
@@ -85,6 +85,7 @@
 import userModalTable from '../components/allview/userModalTable.vue'
 import { defineComponent, ref, onMounted, getCurrentInstance, ComponentInternalInstance, computed } from 'vue'
 import { OneArgVoidFun } from '../utils/commFun'
+import { useRouter } from 'vue-router'
 import echarts from 'echarts'
 import mapConfig from '../chartconfig/map'
 import { inintCharts } from '../chartconfig/installchart'
@@ -115,23 +116,29 @@ export default defineComponent({
     //注册地图
     const regiseterMap: () => void = () => {
       echarts.registerMap('guizhou', gzMapJson)
-      const mapBox = echarts.init(document.getElementById('all-view-center-map') as HTMLCanvasElement)
-      mapBox.setOption(mapConfig)
+      //   const mapBox = echarts.init(document.getElementById('all-view-center-map') as HTMLCanvasElement)
+      //   mapBox.setOption(mapConfig)
     }
     onMounted(() => {
-      const instance = getCurrentInstance() as ComponentInternalInstance
-      const a = instance.appContext.config.globalProperties
-      console.log(a)
       regiseterMap()
     })
     //挂载图表
     inintCharts('providerAllView')
+    //跳转重点页面
+    const router = useRouter()
+    const toKeyPointPage: () => void = () => {
+      //   console.log('luyou', router.resolve({ name: 'keypointview' }))
+      const { href } = router.resolve({ name: 'keypointview' })
+      window.open(href, '_blank')
+      //   router.push({ name: 'keypointview' })
+    }
     return {
       showTable,
       tableType,
       showModalTable,
       showStatusChange,
-      labelItems
+      labelItems,
+      toKeyPointPage
     }
   }
 })

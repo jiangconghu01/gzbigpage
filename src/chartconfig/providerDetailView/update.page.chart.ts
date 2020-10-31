@@ -34,12 +34,12 @@ const curDate: Date = new Date()
 const defDate: string = curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + curDate.getMonth() + 1 : '-0' + (curDate.getMonth() + 1))
 // const curentYears: number[] = [curDate.getFullYear() - 2, curDate.getFullYear() - 1, curDate.getFullYear()]
 //top图表的数据更新逻辑
-function handleTopTable(resData: AxiosResponse<ResponseBody>, encodeList: Record<string, any>) {
+function handleTopTable(resData: AxiosResponse<ResponseBody>, encodeList: Record<string, any>, currentProvider: any) {
   console.log(resData, encodeList)
 
   const encode = encodeList['encode01'].data.data
-  const gysbm: string = resData.data.data[0].gysbm
-  const gysmc: string = resData.data.data[0].gysmc as string
+  const gysbm: string = currentProvider.gysbm
+  const gysmc: string = currentProvider.gysmc as string
   encode.map((val: Record<string, any>) => {
     const t = resData.data.data.find((ele) => ele.idxCode === val.idxCde) as Record<string, any>
     val.value = t.idxValue
@@ -132,11 +132,11 @@ function handleBottomRight(resData: AxiosResponse<ResponseBody>, encodeList: Rec
   config.series[0].data = data1
   config.series[1].data = data2
 }
-function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResponseBody>>[], providerList: any, encodeList: Record<string, any>) {
+function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosResponse<ResponseBody>>[], providerList: any, encodeList: Record<string, any>, currentProvider: any) {
   Promise.all(reqArr)
     .then(([resTop, centerLeft, center, centerRight, bottomLeft, bottomRight]) => {
       _this.$message.success('数据加载成功！')
-      handleTopTable(resTop, encodeList)
+      handleTopTable(resTop, encodeList, currentProvider)
       handleCenterLeft(centerLeft, encodeList)
       handleCenter(center)
       handleCenterRight(centerRight, encodeList)
@@ -158,13 +158,14 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
 
 const updateProviderDetailView = async (_this: Record<string, any>) => {
   //全局统一参数
-  // const date = store.state.selectDate
-  const date = '2020-07'
+  const date = store.state.selectDate
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
-  console.log(_this.$route.params)
+  //   console.log(_this.$route.params)
+
+  const currentProvider: any = store.state.keypointProvider
   //   const currentProvider = _this.$route.params.provider
-  const currentProvider = { accountCode: 'A52', gysbm: 'G000117879', gysjc: '贵通服', gysmc: '贵州省通信产业服务有限公司', monthId: '2020-07', xh: '1', ywlx: 'all' }
+  //   const currentProvider = { accountCode: 'A52', gysbm: 'G000117879', gysjc: '贵通服', gysmc: '贵州省通信产业服务有限公司', monthId: '2020-07', xh: '1', ywlx: 'all' }
   let providerList: AxiosResponse<unknown>
   try {
     //请求供应商编码和名称
@@ -222,7 +223,7 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
       const bottomRightPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, encodeBottomRightParam)
 
       const reqArr = [topPro, centerLeftPro, centerPro, centerRightPro, bottomLeftPro, bottomRightPro]
-      handleAllDataRequest(t_this, reqArr, providerList, encodeMap)
+      handleAllDataRequest(t_this, reqArr, providerList, encodeMap, currentProvider)
     })
     .catch((e) => {
       _this.$message.error('指标加载失败,请刷新重试！')

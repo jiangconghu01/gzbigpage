@@ -14,6 +14,7 @@ export default createStore({
     buniessType: 'all',
     detailTabledate: {},
     allviewItems: {},
+    keypointProvider: {},
     isLoading: false
   },
   getters: {
@@ -42,6 +43,9 @@ export default createStore({
     },
     setAllviewItems(state, data: Record<string, string>[]) {
       state.allviewItems = data
+    },
+    setKeypointProvider(state, data: any) {
+      state.keypointProvider = data
     },
     setIsLoading(state, load: boolean) {
       state.isLoading = load

@@ -1,13 +1,14 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw, RouteLocationNormalized, NavigationGuardNext, Router } from 'vue-router'
 import store from '@/store/index'
 import { requestPostData } from '../http/http'
+import Home from '../views/Home.vue'
 import qs from 'qs'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    redirect: '/allview'
+    component: Home
   },
   {
     path: '/allview',

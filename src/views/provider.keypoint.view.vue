@@ -28,13 +28,36 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, computed, watch } from 'vue'
 import { inintCharts } from '../chartconfig/installchart'
+import { useRouter } from 'vue-router'
+import store from '../store'
 export default defineComponent({
   name: '',
   setup() {
     inintCharts('providerKeypointView')
-    return {}
+    const data = computed(() => {
+      return store.state.keypointProvider
+    })
+    const router = useRouter()
+    watch(data, (nv, ov) => {
+      //   const { href } = router.resolve({
+      //     name: 'detailview',
+      //     params: {
+      //       provider: nv
+      //     }
+      //   })
+      //   window.open(href, '_blank')
+      router.push({
+        name: 'detailview',
+        params: {
+          provider: nv
+        }
+      })
+    })
+    return {
+      data
+    }
   }
 })
 </script>

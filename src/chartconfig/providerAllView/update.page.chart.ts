@@ -4,6 +4,9 @@ import { pageChartsConfig } from '../installchart'
 import { getDatesParams } from '../../utils/commFun'
 import store from '../../store/index'
 import { inintChartsUpdate } from '../installchart'
+import { GZProvinceCityItem, GZProvinceCityEnum, indexdata } from '../static'
+import mapConfig from '../map'
+
 // import { encodeUrl } from '../static'
 
 //取图形的指标接口，图形编码从上到下，从左到右
@@ -65,15 +68,15 @@ function handleLeftTopAll(resData: AxiosResponse<ResponseBody>, pageAllviewEncod
   //   console.log(resData.data.data)
 }
 //right-top图表请求数据逻辑
-function handleRightTopChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+function handleRightTopChart(resData: AxiosResponse<ResponseBody>, pageAllviewEncode: ViewEEncodeRes[]) {
   const config = pageChartsConfig.providerAllView.child['all-view-right-top']
   const label = ['新签合同额', '列账', '付款', '余额']
-  const x:string[] = []
-  const y:string[] = []
+  const x: string[] = []
+  const y: string[] = []
   resData.data.data.map((val: ResData, index) => {
-    if(Number(val.idxOrd) % 2 !==  0){
+    if (Number(val.idxOrd) % 2 !== 0) {
       x.push(val.idxValue as string)
-    }else{
+    } else {
       y.push(val.idxValue as string)
     }
   })
@@ -81,7 +84,7 @@ function handleRightTopChart(resData:AxiosResponse<ResponseBody>,pageAllviewEnco
   config.series[1].data = y
 }
 //left-bootom图表请求数据逻辑
-function handleLeftBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+function handleLeftBottomChart(resData: AxiosResponse<ResponseBody>, pageAllviewEncode: ViewEEncodeRes[]) {
   const config = pageChartsConfig.providerAllView.child['all-view-left-bottom']
   const label = ['房地产', '汽车', '通讯设备', '土木工程', '软件和技术服务', '批发占比']
   config.series[0].data = resData.data.data.map((val: ResData, index) => {
@@ -92,7 +95,7 @@ function handleLeftBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewEn
   })
 }
 //center-bootom图表请求数据逻辑
-function handleCenterBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+function handleCenterBottomChart(resData: AxiosResponse<ResponseBody>, pageAllviewEncode: ViewEEncodeRes[]) {
   const config = pageChartsConfig.providerAllView.child['all-view-center-bottom']
   const label = ['公开招标', '邀请招标', '单一采购（公示）', '邀请询价', '邀请竞争谈判', '公开比选', '公开询价', '单一采购（非公示）', '公开竞争谈判', '电商采购']
   config.series[0].data = resData.data.data.map((val: ResData, index) => {
@@ -103,7 +106,7 @@ function handleCenterBottomChart(resData:AxiosResponse<ResponseBody>,pageAllview
   })
 }
 //right-bootom图表请求数据逻辑
-function handleRightBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewEncode:ViewEEncodeRes[]){
+function handleRightBottomChart(resData: AxiosResponse<ResponseBody>, pageAllviewEncode: ViewEEncodeRes[]) {
   const config = pageChartsConfig.providerAllView.child['all-view-right-bottom']
   const label = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
   config.series[0].data = resData.data.data.map((val: ResData, index) => {
@@ -113,17 +116,29 @@ function handleRightBottomChart(resData:AxiosResponse<ResponseBody>,pageAllviewE
     }
   })
 }
+//地图请求数据逻辑
+function handleMapChart(resData: AxiosResponse<ResponseBody>) {
+  console.log('map', resData.data)
+  const data = resData.data.data.map((val: ResData) => {
+    const t: Record<string, any> = {}
+    t.name = GZProvinceCityEnum[val.accountCode]
+    t.value = val.idxValue
+    return t
+  })
+  mapConfig.series[0].data = data
+}
 //统一请求函数
 const updateProviderAllView = async (_this: Record<string, any>) => {
   //全局统一参数
-  // const date = store.state.selectDate
-  const date = '2020-07'
+  const date = store.state.selectDate
+  //   const date = '2020-07'
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
 
   try {
     //图1用原来接口，先请求该图对应指标
-    const pageAllviewEncode = await requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2001', chnlType: typeMap[businesstype] })
+    // const pageAllviewEncode = await requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, any>(getEncode, { viewCode: '2001', chnlType: typeMap[businesstype] })
+    const pageAllviewEncode: any = { data: { data: indexdata } }
     //left-top图表请求数据逻辑
     const encondelefttop = pageAllviewEncode.data.data[0].idxs.map((ele: EncodeType) => ele.idxCde)
     const chartCode = pageAllviewEncode.data.data[0].chartCode
@@ -153,7 +168,6 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
     const chartCodeCenterBottom = pageAllviewEncode.data.data[5].chartCode
     const centerBottomParam: Prama = JSON.parse(getDatesParams([date], [citycode], encondecenterbottom, businesstype, chartCodeCenterBottom))
     const centerBottomPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, centerBottomParam)
-
     //right-bottom图表请求数据逻辑
     const curDate: Date = new Date()
     const dateList: string[] = Array.from({ length: 12 }, (v, k) => {
@@ -165,10 +179,16 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
     const rightBottomParam: Prama = JSON.parse(getDatesParams(dateList, [citycode], enconderightbottom, businesstype, chartCodeRightBottom))
     const rightBottomPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, rightBottomParam)
 
+    //地图数据
+    const mapcncode = pageAllviewEncode.data.data[2].idxs.map((ele: EncodeType) => ele.idxCde)
+    const chartCodeMap = pageAllviewEncode.data.data[2].chartCode
+    const citycodelist = Object.keys(GZProvinceCityItem)
+    const mapParam: Prama = JSON.parse(getDatesParams([date], citycodelist, mapcncode, businesstype, chartCodeMap))
+    const mapPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, mapParam)
     //请求实际数据的promise数组
-    const reqArr = [leffTop, topAll, rightTopPro, leftBottomPro, centerBottomPro, rightBottomPro]
+    const reqArr = [leffTop, topAll, rightTopPro, leftBottomPro, centerBottomPro, rightBottomPro, mapPro]
     Promise.all(reqArr)
-      .then(([resLeffTop, topAll, rightTopPro, leftBottomPro, centerBottomPro, rightBottomPro]) => {
+      .then(([resLeffTop, topAll, rightTopPro, leftBottomPro, centerBottomPro, rightBottomPro, mapPro]) => {
         _this.$message.success('数据加载成功！')
         handleLeftTopChart(resLeffTop, pageAllviewEncode.data.data)
         handleLeftTopAll(topAll, pageAllviewEncode.data.data)
@@ -176,6 +196,7 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
         handleLeftBottomChart(leftBottomPro, pageAllviewEncode.data.data)
         handleCenterBottomChart(centerBottomPro, pageAllviewEncode.data.data)
         handleRightBottomChart(rightBottomPro, pageAllviewEncode.data.data)
+        handleMapChart(mapPro)
         setTimeout(() => {
           inintChartsUpdate('providerAllView')
         }, 0)

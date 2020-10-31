@@ -49,7 +49,8 @@ const option = {
       show: false
     },
     axisLabel: {
-      color: '#BFE3F2'
+      color: '#BFE3F2',
+      clickable: true
     },
     axisLine: {
       lineStyle: {
