@@ -227,9 +227,9 @@ function handleAllDataRequest(_this: Record<string, any>, reqArr: Promise<AxiosR
 // const date = window.sessionStorage.getItem("selectDate") as string
 
 const updateProviderKeypointView = async (_this: Record<string, any>) => {
-  const date = store.state.selectDate
-  const citycode = store.getters.getCityCode
-  const businesstype = store.state.buniessType
+  const date = _this.$route.params.date || store.state.selectDate
+  const citycode = _this.$route.params.city || store.getters.getCityCode
+  const businesstype = _this.$route.params.type || store.state.buniessType
   let providerList: AxiosResponse<ResponseBody>
 
   try {

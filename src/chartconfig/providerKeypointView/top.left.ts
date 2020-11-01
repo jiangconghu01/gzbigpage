@@ -45,6 +45,7 @@ const option = {
   },
   yAxis: {
     type: 'category',
+    triggerEvent: true,
     axisTick: {
       show: false
     },
@@ -57,7 +58,7 @@ const option = {
         color: '#183888'
       }
     },
-    data: ['公司甲', '公司乙', '公司丙', '公司丁']
+    data: [{ name: '公司甲', value: '公司甲', v: 3 }, '公司乙', '公司丙', '公司丁']
   },
   series: [
     {

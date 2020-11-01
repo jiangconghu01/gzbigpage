@@ -80,9 +80,24 @@ const inintChartsUpdate: FuncPstringVoid = (page: PageName) => {
     currentPage[val] && box.setOption(currentPage[val])
     if (page === 'providerKeypointView') {
       if (val === 'keypoint-view-top-left') {
-        box.on('click', function(params: any) {
+        box.off('click')
+        box.on('click', 'yAxis.category', function(params: any) {
           console.log(params)
-          store.commit('setKeypointProvider', params.data)
+          store.commit('setKeypointProvider', { gysjc: params.value })
+        })
+      }
+      if (val === 'keypoint-view-top-right') {
+        box.off('click')
+        box.on('click', 'xAxis.category', function(params: any) {
+          console.log(params)
+          store.commit('setKeypointProvider', { gysjc: params.value })
+        })
+      }
+      if (val === 'detail-view-top-center') {
+        box.off('click')
+        box.on('click', 'xAxis.category', function(params: any) {
+          console.log(params)
+          store.commit('setKeypointProvider', { gysjc: params.value })
         })
       }
     }

@@ -14,11 +14,11 @@
           <p class="text"><i>供应商总数</i> <i>需关注供应商</i></p>
           <p class="number">
             <span class="lum-1"
-              ><i class="num">{{ labelItems[0].idxValue }}</i
+              ><i class="num">{{ labelItems[0] && labelItems[0].idxValue }}</i
               ><i class="unit">个</i></span
             >
             <span class="lum-2 active" @click="showModalTable('provider_num')"
-              ><i class="num">{{ labelItems[1].idxValue }}</i
+              ><i class="num">{{ labelItems[1] && labelItems[1].idxValue }}</i
               ><i class="unit">个</i></span
             >
           </p>
@@ -27,11 +27,11 @@
           <p class="text"><i>新签合同额</i> <i>需关注合同</i></p>
           <p class="number">
             <span class="lum-1"
-              ><i class="num">{{ (labelItems[2].idxValue / 10000).toFixed(1) }}</i
+              ><i class="num">{{ labelItems[2] && (labelItems[2].idxValue / 10000).toFixed(1) }}</i
               ><i class="unit">万</i></span
             >
             <span class="lum-2 active" @click="showModalTable('contract_num')"
-              ><i class="num">{{ labelItems[3].idxValue }}</i
+              ><i class="num">{{ labelItems[3] && labelItems[3].idxValue }}</i
               ><i class="unit">个</i></span
             >
           </p>
@@ -40,11 +40,11 @@
           <p class="text"><i>列账总额</i> <i>需关注列账数</i></p>
           <p class="number">
             <span class="lum-1"
-              ><i class="num">{{ (labelItems[4].idxValue / 10000).toFixed(0) }}</i
+              ><i class="num">{{ labelItems[4] && (labelItems[4].idxValue / 10000).toFixed(0) }}</i
               ><i class="unit">万</i></span
             >
             <span class="lum-2 active" @click="showModalTable('bill_num')"
-              ><i class="num">{{ (labelItems[5].idxValue / 10000).toFixed(0) }}</i
+              ><i class="num">{{ labelItems[5] && (labelItems[5].idxValue / 10000).toFixed(0) }}</i
               ><i class="unit">万</i></span
             >
           </p>
@@ -53,11 +53,11 @@
           <p class="text"><i>已付金额</i> <i>余额</i></p>
           <p class="number">
             <span class="lum-1"
-              ><i class="num">{{ (labelItems[0].idxValue / 10000).toFixed(1) }}</i
+              ><i class="num">{{ labelItems[6] && (labelItems[6].idxValue / 10000).toFixed(1) }}</i
               ><i class="unit">万</i></span
             >
             <span class="lum-2"
-              ><i class="num">{{ (labelItems[0].idxValue / 10000).toFixed(1) }}</i
+              ><i class="num">{{ labelItems[7] && (labelItems[7].idxValue / 10000).toFixed(1) }}</i
               ><i class="unit">万</i></span
             >
           </p>
@@ -128,7 +128,7 @@ export default defineComponent({
     const router = useRouter()
     const toKeyPointPage: () => void = () => {
       //   console.log('luyou', router.resolve({ name: 'keypointview' }))
-      const { href } = router.resolve({ name: 'keypointview' })
+      const { href } = router.resolve({ name: 'keypointview', params: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
       window.open(href, '_blank')
       //   router.push({ name: 'keypointview' })
     }
