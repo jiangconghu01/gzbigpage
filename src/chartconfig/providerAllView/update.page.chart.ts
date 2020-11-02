@@ -123,6 +123,7 @@ function handleMapChart(resData: AxiosResponse<ResponseBody>) {
     const t: Record<string, any> = {}
     t.name = GZProvinceCityEnum[val.accountCode]
     t.value = val.idxValue
+    t.value2 = val.accountCode
     return t
   })
   mapConfig.series[0].data = data

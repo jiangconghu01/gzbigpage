@@ -83,13 +83,14 @@
 
 <script lang="ts">
 import userModalTable from '../components/allview/userModalTable.vue'
-import { defineComponent, ref, onMounted, getCurrentInstance, ComponentInternalInstance, computed } from 'vue'
+import { defineComponent, ref, onMounted, getCurrentInstance, ComponentInternalInstance, computed, watch } from 'vue'
 import { OneArgVoidFun } from '../utils/commFun'
 import { useRouter } from 'vue-router'
 import echarts from 'echarts'
 import mapConfig from '../chartconfig/map'
 import { inintCharts } from '../chartconfig/installchart'
 import store from '../store'
+import { requestPostData } from '../http/http'
 // import gzMapJson from 'echarts/map/json/province/guizhou.json'
 const gzMapJson = require('echarts/map/json/province/guizhou.json')
 export default defineComponent({
@@ -122,15 +123,37 @@ export default defineComponent({
     onMounted(() => {
       regiseterMap()
     })
+    //选择同步地图
+    const cityValue = computed(() => {
+      return store.state.cityCode
+    })
+    watch(cityValue, (nv, ov) => {
+      requestPostData('/channel/map/assembleJsonObject', { parentOrgCode: nv })
+        .then((res) => {
+          echarts.registerMap('guizhou', res.data as any)
+          const mapBox = echarts.init(document.getElementById('all-view-center-map') as HTMLCanvasElement)
+          if (nv === 'A52') {
+            mapBox.setOption(mapConfig)
+          } else {
+            const config = JSON.parse(JSON.stringify(mapConfig))
+            config.series[0].data = []
+            config.series[1].data = []
+            mapBox.setOption(config)
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    })
     //挂载图表
     inintCharts('providerAllView')
     //跳转重点页面
     const router = useRouter()
     const toKeyPointPage: () => void = () => {
-      //   console.log('luyou', router.resolve({ name: 'keypointview' }))
-      const { href } = router.resolve({ name: 'keypointview', params: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
-      window.open(href, '_blank')
-      //   router.push({ name: 'keypointview' })
+      //   const { href } = router.resolve({ name: 'keypointview', params: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
+      const { href } = router.resolve({ name: 'keypointview', query: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
+      //   window.open(href, '_blank')
+      router.push({ name: 'keypointview', query: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
     }
     return {
       showTable,

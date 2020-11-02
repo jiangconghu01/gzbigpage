@@ -5,6 +5,12 @@ const option = {
       type: 'shadow'
     }
   },
+  grid: {
+    top: '10%',
+    left: '85',
+    right: '5%',
+    bottom: '15%'
+  },
   color: ['#16D4D2'],
   xAxis: {
     axisTick: {

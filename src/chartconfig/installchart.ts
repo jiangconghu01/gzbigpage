@@ -93,13 +93,20 @@ const inintChartsUpdate: FuncPstringVoid = (page: PageName) => {
           store.commit('setKeypointProvider', { gysjc: params.value })
         })
       }
-      if (val === 'detail-view-top-center') {
+      if (val === 'keypoint-view-bottom-center') {
         box.off('click')
         box.on('click', 'xAxis.category', function(params: any) {
           console.log(params)
           store.commit('setKeypointProvider', { gysjc: params.value })
         })
       }
+    }
+    if (page === 'providerAllView' && val === 'all-view-center-map') {
+      box.off('click')
+      box.on('click', function(params: any) {
+        console.log(params)
+        store.commit('setCityCode', params.data.value2)
+      })
     }
   })
 }

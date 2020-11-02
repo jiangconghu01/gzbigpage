@@ -118,7 +118,7 @@ function handleBottomRight(resData: AxiosResponse<ResponseBody>, encodeList: Rec
   const config = pageChartsConfig.providerDetailView.child['detail-view-bottom-right']
   const encodes = encodeList['encode06'].data.data
   const encode1 = encodes[0].idxCde
-  const encode2 = encodes[0].idxCde
+  const encode2 = encodes[1].idxCde
   const data1: Record<string, any>[] = []
   const data2: Record<string, any>[] = []
   resData.data.data.forEach((val) => {
@@ -163,13 +163,24 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
   const businesstype = store.state.buniessType
   //   console.log(_this.$route.params)
 
-  const currentProvider: any = store.state.keypointProvider
+  const currentProviderJc: any = store.state.keypointProvider
   //   const currentProvider = _this.$route.params.provider
   //   const currentProvider = { accountCode: 'A52', gysbm: 'G000117879', gysjc: '贵通服', gysmc: '贵州省通信产业服务有限公司', monthId: '2020-07', xh: '1', ywlx: 'all' }
   try {
     //请求供应商编码和名称
     const providerList = await requestPostData<Record<string, string>, ResponseBody, unknown>(getProvider, { accountCode: citycode, monthId: date, ywlx: businesstype })
-    const currentProvider: any = providerList.data.data.filter((ele: any) => ele.gysjc === currentProvider.gysjc)
+    //这里filter取到的是数组，[0]取第一位
+    const currentProvider: any = providerList.data.data.filter((ele: any) => ele.gysjc === currentProviderJc.gysjc)[0]
+    if (!providerList.data.data || providerList.data.data.length === 0) {
+      _this.$message.error('供应商列表加载失败！')
+      store.commit('setIsLoading', false)
+      return
+    }
+    if (!currentProvider) {
+      _this.$message.error('供应商简称检索失败！')
+      store.commit('setIsLoading', false)
+      return
+    }
     //获取该页面所有图表的指标编码
     Promise.all([
       requestPostData<{ idxGroup: string }, ResponseBody, unknown>(getEncode, { idxGroup: '0301' }),
@@ -195,7 +206,7 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
         const topPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, topParam)
         //center-eft图表请求参数
         const encodecenterleft = encode02.data.data.map((val) => val.idxCde)
-        const dateArr: string[] = [String(curDate.getFullYear() - 2 + '-12'), String(curDate.getFullYear() - 1 + '-12'), defDate]
+        const dateArr: string[] = [String(curDate.getFullYear() - 2 + '-12'), String(curDate.getFullYear() - 1 + '-12'), date]
         const centerLeftParam: Prama = JSON.parse(getDatesParamsNew(dateArr, [citycode], encodecenterleft, [currentProvider.gysbm], businesstype))
         const centerLeftPro = requestPostData<Prama, ResponseBody, unknown>(encodeUrl, centerLeftParam)
         //center-center图表请求参数
@@ -229,7 +240,7 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
         store.commit('setIsLoading', false)
       })
   } catch (error) {
-    _this.$message.error('供应商编码加载失败,请刷新重试！')
+    _this.$message.error('供应商编码加载过程失败！')
   }
 }
 

@@ -27,14 +27,16 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, computed, watch } from 'vue'
+<script lang="ts">
+import { defineComponent, computed, watch, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { inintCharts } from '../chartconfig/installchart'
 import { useRouter } from 'vue-router'
 import store from '../store'
 export default defineComponent({
   name: '',
   setup() {
+    const instance = getCurrentInstance() as ComponentInternalInstance //vue的this实例
+    const _this = instance.appContext.config.globalProperties //全局对象属性
     inintCharts('providerKeypointView')
     const data = computed(() => {
       return store.state.keypointProvider
@@ -52,9 +54,14 @@ export default defineComponent({
         name: 'detailview',
         params: {
           provider: nv
-        }
+        } as Record<string, any>
       })
     })
+    // onMounted(() => {
+    //   store.commit('setSelectDate', _this.$route.params.date)
+    //   store.commit('setCityCode', _this.$route.params.city)
+    //   store.commit('setBuniessType', _this.$route.params.type)
+    // })
     return {
       data
     }

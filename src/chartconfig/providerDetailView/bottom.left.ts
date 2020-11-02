@@ -4,7 +4,7 @@ const option = {
     trigger: 'axis',
     axisPointer: {
       type: 'shadow'
-    },
+    }
     // formatter:function(params:any){
     //   return params +'万元'
     // },
@@ -20,14 +20,14 @@ const option = {
     axisLabel: {
       textStyle: {
         color: '#388DD3'
-      },
+      }
     },
     axisLine: {
       lineStyle: {
-        color: '#183888',
+        color: '#183888'
       }
     },
-    data: ["0-3个月", "3-6个月", "6-12个月", "12个月以上"]
+    data: ['0-3个月', '3-6个月', '6-12个月', '12个月以上']
   },
   yAxis: {
     name: '单位：万元',
@@ -38,7 +38,7 @@ const option = {
       }
     },
     axisLabel: {
-      formatter:'{value}',
+      formatter: '{value}',
       textStyle: {
         color: '#398FD1'
       }
@@ -48,17 +48,20 @@ const option = {
         color: '#183888'
       }
     },
-    axisLine: { //坐标轴轴线相关设置。数学上的x轴
+    axisLine: {
+      //坐标轴轴线相关设置。数学上的x轴
       show: false,
       lineStyle: {
-        color: '#C9EFFA',
+        color: '#C9EFFA'
       }
-    },
+    }
   },
-  series: [{
-    type: 'bar',
-    barWidth: '18%',
-    data: [2.5, 5.5, 4.7, 1.7]
-  }]
+  series: [
+    {
+      type: 'bar',
+      barWidth: '18%',
+      data: [2.5, 5.5, 4.7, 1.7]
+    }
+  ]
 }
 export default option

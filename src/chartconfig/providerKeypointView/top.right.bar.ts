@@ -7,8 +7,8 @@ const option = {
   },
   grid: {
     top: '12%',
-    left: '1%',
-    right: '1%',
+    left: '50',
+    right: '2%',
     bottom: '8%',
     containLabel: true
   },

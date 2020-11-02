@@ -1,17 +1,23 @@
 import { createStore } from 'vuex'
+import { getQueryVariable } from '../utils/commFun'
+
 export type PageType = 'allview' | 'detailview' | 'keypointview'
 const curDate: Date = new Date()
-const defDate: string =
-  curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '-12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + (curDate.getMonth() + 1) : '-0' + (curDate.getMonth() + 1))
-window.sessionStorage.setItem('cityCode', 'A52')
+const defDate =
+  getQueryVariable('date') ||
+  (curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '-12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + (curDate.getMonth() + 1) : '-0' + (curDate.getMonth() + 1)))
+const defCity = getQueryVariable('city') || 'A52'
+const defType = getQueryVariable('type') || 'all'
+window.sessionStorage.setItem('cityCode', defCity as string)
 window.sessionStorage.setItem('selectDate', defDate)
-window.sessionStorage.setItem('buniessType', 'all')
+window.sessionStorage.setItem('buniessType', defType as string)
+
 export default createStore({
   state: {
     currntPage: 'allview',
-    cityCode: 'A52',
+    cityCode: defCity,
     selectDate: defDate,
-    buniessType: 'all',
+    buniessType: defType,
     detailTabledate: {},
     allviewItems: {},
     keypointProvider: {},

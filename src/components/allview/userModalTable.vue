@@ -135,11 +135,6 @@ export default defineComponent({
     ]
     const columns4: any = [
       {
-        title: '账期',
-        dataIndex: 'monthId',
-        width: 150
-      },
-      {
         title: '指标编码',
         dataIndex: 'idxCde',
         width: 150
