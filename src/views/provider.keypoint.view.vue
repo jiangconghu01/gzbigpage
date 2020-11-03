@@ -43,19 +43,16 @@ export default defineComponent({
     })
     const router = useRouter()
     watch(data, (nv, ov) => {
-      //   const { href } = router.resolve({
+      const { href } = router.resolve({
+        name: 'detailview'
+      })
+      window.open(href, '_blank')
+      //   router.push({
       //     name: 'detailview',
       //     params: {
       //       provider: nv
-      //     }
+      //     } as Record<string, any>
       //   })
-      //   window.open(href, '_blank')
-      router.push({
-        name: 'detailview',
-        params: {
-          provider: nv
-        } as Record<string, any>
-      })
     })
     // onMounted(() => {
     //   store.commit('setSelectDate', _this.$route.params.date)

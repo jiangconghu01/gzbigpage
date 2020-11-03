@@ -162,8 +162,15 @@ const updateProviderDetailView = async (_this: Record<string, any>) => {
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
   //   console.log(_this.$route.params)
-
-  const currentProviderJc: any = store.state.keypointProvider
+  const currentProviderJcStr: string | null = window.sessionStorage.getItem('keypointProvider')
+  let currentProviderJc: any
+  if (currentProviderJcStr) {
+    currentProviderJc = JSON.parse(currentProviderJcStr as string)
+  } else {
+    _this.$message.error('当前不存在供应商，请重新进入或刷新页面！')
+    return
+  }
+  //   const currentProviderJc: any = store.state.keypointProvider
   //   const currentProvider = _this.$route.params.provider
   //   const currentProvider = { accountCode: 'A52', gysbm: 'G000117879', gysjc: '贵通服', gysmc: '贵州省通信产业服务有限公司', monthId: '2020-07', xh: '1', ywlx: 'all' }
   try {

@@ -162,8 +162,8 @@ export default defineComponent({
     const toKeyPointPage: () => void = () => {
       //   const { href } = router.resolve({ name: 'keypointview', params: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
       const { href } = router.resolve({ name: 'keypointview', query: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
-      //   window.open(href, '_blank')
-      router.push({ name: 'keypointview', query: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
+      window.open(href, '_blank')
+      //   router.push({ name: 'keypointview', query: { date: store.state.selectDate, type: store.state.buniessType, city: store.state.cityCode } })
     }
     return {
       showTable,

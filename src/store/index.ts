@@ -4,13 +4,15 @@ import { getQueryVariable } from '../utils/commFun'
 export type PageType = 'allview' | 'detailview' | 'keypointview'
 const curDate: Date = new Date()
 const defDate =
-  getQueryVariable('date') ||
+  window.sessionStorage.getItem('selectDate') ||
   (curDate.getMonth() === 0 ? curDate.getFullYear() - 1 + '-12' : curDate.getFullYear() + (curDate.getMonth() > 8 ? '-' + (curDate.getMonth() + 1) : '-0' + (curDate.getMonth() + 1)))
-const defCity = getQueryVariable('city') || 'A52'
-const defType = getQueryVariable('type') || 'all'
+const defCity = window.sessionStorage.getItem('cityCode') || 'A52'
+const defType = window.sessionStorage.getItem('buniessType') || 'all'
+const defProvider = window.sessionStorage.getItem('keypointProvider') || ''
 window.sessionStorage.setItem('cityCode', defCity as string)
 window.sessionStorage.setItem('selectDate', defDate)
 window.sessionStorage.setItem('buniessType', defType as string)
+window.sessionStorage.setItem('keypointProvider', defProvider)
 
 export default createStore({
   state: {
@@ -52,6 +54,8 @@ export default createStore({
     },
     setKeypointProvider(state, data: any) {
       state.keypointProvider = data
+      const sessionData = JSON.stringify(data)
+      window.sessionStorage.setItem('keypointProvider', sessionData)
     },
     setIsLoading(state, load: boolean) {
       state.isLoading = load
