@@ -56,7 +56,7 @@ function handleLeftTopChart(resData: AxiosResponse<ResponseBody>, pageAllviewEnc
   const label = ['成本类', '工程采购类', '合作分成类', '其他']
   config.series[0].data = resData.data.data.map((val: ResData, index) => {
     return {
-      name: label[index],
+      name: val.idxName,
       value: val.idxValue
     }
   })

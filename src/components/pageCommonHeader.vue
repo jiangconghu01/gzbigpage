@@ -193,6 +193,10 @@ export default defineComponent({
     padding-left: 50px;
     /deep/ .ant-select {
       margin-left: 20px;
+      .ant-select-selection-selected-value {
+        font-size: 18px;
+        font-weight: bold;
+      }
     }
   }
   .center-title {
@@ -232,23 +236,27 @@ export default defineComponent({
     color: #fff;
     font-weight: bold;
   }
-  .ant-select ::v-deep .ant-select-selection {
+  .ant-select /deep/ .ant-select-selection {
     background-color: #3a5697;
     border-color: rgba(0, 0, 0, 0);
     color: #fff;
     font-weight: bold;
   }
-  ::v-deep .ant-select-arrow {
-    font-size: 14px;
+  /deep/ .ant-select-arrow {
+    font-size: 16px;
     color: #6197ef;
   }
-  ::v-deep .ant-calendar-picker-icon {
-    font-size: 14px;
+  /deep/ .ant-calendar-picker-icon {
+    font-size: 16px;
     color: #6197ef;
   }
-  ::v-deep .ant-calendar-picker-clear {
-    font-size: 14px;
+  /deep/ .ant-calendar-picker-clear {
+    font-size: 16px;
     color: #6197ef;
+  }
+  /deep/ .ant-calendar-picker-input {
+    font-size: 18px;
+    font-weight: bold;
   }
 }
 @keyframes text-pop-up-top {

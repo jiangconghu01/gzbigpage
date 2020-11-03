@@ -40,8 +40,8 @@
           <p class="text"><i>列账总额</i> <i>需关注列账数</i></p>
           <p class="number">
             <span class="lum-1"
-              ><i class="num">{{ labelItems[4] && (labelItems[4].idxValue / 10000).toFixed(0) }}</i
-              ><i class="unit">万</i></span
+              ><i class="num">{{ labelItems[4] && (labelItems[4].idxValue / 100000000).toFixed(3) }}</i
+              ><i class="unit">亿</i></span
             >
             <span class="lum-2 active" @click="showModalTable('bill_num')"
               ><i class="num">{{ labelItems[5] && (labelItems[5].idxValue / 10000).toFixed(0) }}</i
@@ -99,6 +99,8 @@ export default defineComponent({
     userModalTable
   },
   setup(props, context) {
+    const instance = getCurrentInstance() as ComponentInternalInstance //vue的this实例
+    const _this = instance.appContext.config.globalProperties //全局对象属性
     //头部的一排label值
     const labelItems = computed(() => {
       return store.state.allviewItems
@@ -130,15 +132,23 @@ export default defineComponent({
     watch(cityValue, (nv, ov) => {
       requestPostData('/channel/map/assembleJsonObject', { parentOrgCode: nv })
         .then((res) => {
-          echarts.registerMap('guizhou', res.data as any)
-          const mapBox = echarts.init(document.getElementById('all-view-center-map') as HTMLCanvasElement)
-          if (nv === 'A52') {
-            mapBox.setOption(mapConfig)
+          const resdata = res.data as any
+          if (!resdata.features) {
+            const mapBox = echarts.init(document.getElementById('all-view-center-map') as HTMLCanvasElement)
+            mapBox.clear()
+            _this.$message.warning('没有加载到对应地图！')
           } else {
-            const config = JSON.parse(JSON.stringify(mapConfig))
-            config.series[0].data = []
-            config.series[1].data = []
-            mapBox.setOption(config)
+            echarts.registerMap('guizhou', res.data as any)
+            const mapBox = echarts.init(document.getElementById('all-view-center-map') as HTMLCanvasElement)
+            mapBox.clear()
+            if (nv === 'A52') {
+              mapBox.setOption(mapConfig)
+            } else {
+              const config = JSON.parse(JSON.stringify(mapConfig))
+              config.series[0].data = []
+              config.series[1].data = []
+              mapBox.setOption(config)
+            }
           }
         })
         .catch((e) => {
@@ -255,7 +265,7 @@ export default defineComponent({
           margin-left: 20px;
           .lum-1 {
             display: inline-block;
-            width: 75px;
+            width: 80px;
             white-space: nowrap;
           }
           .lum-2 {

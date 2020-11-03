@@ -1,13 +1,14 @@
 const option = {
   title: {
-    text: '供应商业务类型',
+    text: '供应商\n业务类型',
     left: 'center',
-    top: '49%',
+    top: '45%',
     textStyle: {
-      fontSize: 13,
+      fontSize: 30,
       color: '#fff',
+      lineHeight: 32,
       fontStyle: 'normal',
-      fontWeight: '400',
+      fontWeight: 'bold',
       fontFamily: 'PingFangSC-Regular,PingFang SC;'
     }
   },
