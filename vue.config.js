@@ -26,11 +26,19 @@ module.exports = {
       }
     }
   },
+  transpileDependencies: ['vue-router', 'vuex', 'vue', '@vue/runtime-dom', '@vue/runtime-core', '@vue'],
   chainWebpack: (config) => {
     // 修复HMR
     config.resolve.symlinks(true)
     // vue默认@指向src目录
     config.resolve.alias.set('@', path.resolve('src'))
+    // config.module
+    //   .rule('js')
+    //   .include.add(/src/)
+    //   .end()
+    //   .use('babel')
+    //   .loader('babel-loader')
+    //   .tap((options) => options)
   },
   devServer: {
     compress: true,
