@@ -3,10 +3,12 @@
     <div class="container top-box">
       <div class="top-left frame-back-box">
         <h2 class="chart-title">供应商列账情况统计图</h2>
+        <div class="chart-unit-text">单位：万元</div>
         <div class="chart-box" id="keypoint-view-top-left"></div>
       </div>
       <div class="top-right frame-back-box">
         <h2 class="chart-title">信用信息分布情况统计图</h2>
+        <div class="chart-unit-text">单位：万元</div>
         <div class="chart-box" id="keypoint-view-top-right"></div>
       </div>
     </div>
@@ -17,10 +19,12 @@
       </div>
       <div class="bottom-center frame-back-box">
         <h2 class="chart-title">当年签订合同的采购方式分布统计图</h2>
+        <div class="chart-unit-text">单位：个</div>
         <div class="chart-box" id="keypoint-view-bottom-center"></div>
       </div>
       <div class="bottom-right frame-back-box">
         <h2 class="chart-title">注册资本和实缴资本差异分析</h2>
+        <div class="chart-unit-text">单位：百万元</div>
         <div class="chart-box" id="keypoint-view-bottom-right"></div>
       </div>
     </div>

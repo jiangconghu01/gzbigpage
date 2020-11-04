@@ -1,5 +1,7 @@
 import echarts from 'echarts'
+import { chartFontStyle } from '../static'
 const option = {
+  textStyle: chartFontStyle,
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -18,7 +20,8 @@ const option = {
   xAxis: {
     axisLabel: {
       color: '#398FD1',
-      interval: 0
+      interval: 0,
+      fontSize: 16
     },
     axisLine: {
       lineStyle: {
@@ -46,7 +49,9 @@ const option = {
     },
     axisLabel: {
       textStyle: {
-        color: '#398FD1'
+        color: '#398FD1',
+        fontSize: 16,
+        fontWeight: 0
       }
     },
     splitLine: {

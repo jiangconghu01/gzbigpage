@@ -1,19 +1,20 @@
+import { chartFontStyle } from '../static'
 const option = {
+  textStyle: chartFontStyle,
   tooltip: {
     trigger: 'axis',
     axisPointer: {
       lineStyle: {
         color: '#96B2CC'
-      },
-    },
-    
+      }
+    }
   },
   legend: {
-    right: '10%',
+    right: 120,
     top: '2%',
     textStyle: {
       color: '#C7EBF9',
-      fontSize: 14
+      fontSize: 16
     },
     itemWidth: 15,
     itemHeight: 15,
@@ -28,7 +29,8 @@ const option = {
   xAxis: {
     axisLabel: {
       interval: 0, //强制显示文字
-      color: '#398FD1'
+      color: '#398FD1',
+      fontSize: 16
     },
     axisLine: {
       lineStyle: {
@@ -51,13 +53,13 @@ const option = {
   },
   yAxis: [
     {
-      name:'单位：百万元',
       axisTick: {
         show: false
       },
       axisLabel: {
         textStyle: {
-          color: '#398FD1'
+          color: '#398FD1',
+          fontSize: 16
         }
       },
       splitLine: {

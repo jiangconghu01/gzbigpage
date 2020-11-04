@@ -107,4 +107,12 @@ const indexdata = [
   },
   { viewCode: '2001', chnlType: '00', chartCode: 'GYSZT_00_07', chartOrd: 7, idxs: [{ id: 'A2D6BB192E40430BE0531501A8C10178', chartCode: 'GYSZT_00_07', idxCde: 'GYSZT_00_0034', idxOrd: '1' }] }
 ]
-export { GZProvinceCityEnum, GZProvinceCityItem, indexdata }
+const chartFontStyle: Record<string, any> = {
+  color: '#17d3ba',
+  fontStyle: 'normal',
+  fontFamily: 'sans-serif',
+  fontWeight: 'bold',
+  fontSize: 17
+}
+
+export { GZProvinceCityEnum, GZProvinceCityItem, indexdata, chartFontStyle }

@@ -244,7 +244,7 @@ export default defineComponent({
           margin-left: 20px;
           margin-top: 25px;
           margin-bottom: 0;
-          font-size: 15px;
+          font-size: 17px;
           letter-spacing: -2px;
           i {
             font-weight: bold;
@@ -297,7 +297,7 @@ export default defineComponent({
           }
           .unit {
             margin-left: 3px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
           }
         }

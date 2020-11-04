@@ -193,6 +193,12 @@ export default defineComponent({
     padding-left: 50px;
     /deep/ .ant-select {
       margin-left: 20px;
+      .ant-select-selection {
+        background-color: #3a5697;
+        border-color: rgba(0, 0, 0, 0);
+        color: #fff;
+        font-weight: bold;
+      }
       .ant-select-selection-selected-value {
         font-size: 18px;
         font-weight: bold;
@@ -221,7 +227,7 @@ export default defineComponent({
     align-items: flex-end;
     justify-content: flex-end;
     i {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
       margin-right: 10px;
     }
@@ -231,12 +237,6 @@ export default defineComponent({
     color: #fff;
   }
   ::v-deep .ant-calendar-picker-input {
-    background-color: #3a5697;
-    border-color: rgba(0, 0, 0, 0);
-    color: #fff;
-    font-weight: bold;
-  }
-  .ant-select /deep/ .ant-select-selection {
     background-color: #3a5697;
     border-color: rgba(0, 0, 0, 0);
     color: #fff;

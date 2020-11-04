@@ -1,4 +1,6 @@
+import { chartFontStyle } from '../static'
 const option = {
+  textStyle: chartFontStyle,
   color: ['#16D4D2'],
   tooltip: {
     trigger: 'axis',
@@ -19,7 +21,8 @@ const option = {
     },
     axisLabel: {
       textStyle: {
-        color: '#388DD3'
+        color: '#388DD3',
+        fontSize: 16
       }
     },
     axisLine: {
@@ -40,7 +43,8 @@ const option = {
     axisLabel: {
       formatter: '{value}',
       textStyle: {
-        color: '#398FD1'
+        color: '#398FD1',
+        fontSize: 16
       }
     },
     splitLine: {

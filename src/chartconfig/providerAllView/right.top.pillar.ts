@@ -1,4 +1,6 @@
+import { chartFontStyle } from '../static'
 const option = {
+  textStyle: chartFontStyle,
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -7,12 +9,10 @@ const option = {
   },
   legend: {
     top: 10,
-    left: 220,
+    right: 20,
     itemWidth: 15,
     itemHeight: 15,
-    // padding: [5, 10],
     textStyle: {
-      fontSize: 14,
       color: '#BFE4F2',
       padding: [3, 0, 0, 0]
     },
@@ -43,7 +43,8 @@ const option = {
   yAxis: {
     type: 'category',
     axisLabel: {
-      color: '#BFE3F2'
+      color: '#BFE3F2',
+      fontSize: 17
     },
     axisLine: {
       //坐标轴轴线相关设置。数学上的x轴

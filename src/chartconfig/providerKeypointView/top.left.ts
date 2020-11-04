@@ -1,4 +1,6 @@
+import { chartFontStyle } from '../static'
 const option = {
+  textStyle: chartFontStyle,
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -11,7 +13,7 @@ const option = {
     itemWidth: 15,
     itemHeight: 15,
     textStyle: {
-      fontSize: 14,
+      fontSize: 16,
       color: '#BFE4F2'
     },
     data: ['挂账金额', '支付金额', '余额']
@@ -23,8 +25,6 @@ const option = {
     containLabel: true
   },
   xAxis: {
-    name: '单位：万元',
-    position: 'top',
     axisTick: {
       show: false
     },
@@ -51,7 +51,8 @@ const option = {
     },
     axisLabel: {
       color: '#BFE3F2',
-      clickable: true
+      clickable: true,
+      fontSize: 16
     },
     axisLine: {
       lineStyle: {

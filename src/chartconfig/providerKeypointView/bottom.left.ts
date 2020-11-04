@@ -1,4 +1,6 @@
+import { chartFontStyle } from '../static'
 const option = {
+  textStyle: chartFontStyle,
   title: {
     text: '供应商业务类型',
     left: 'center',
