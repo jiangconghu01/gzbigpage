@@ -67,14 +67,17 @@
     <div class="center-map" id="all-view-center-map"></div>
     <div class="center-bottom frame-back-box">
       <h2 class="chart-title">列账采购方式统计图</h2>
+      <div class="chart-unit-text" style="top:30px;">单位：万元</div>
       <div class="chart-box" id="all-view-center-bottom"></div>
     </div>
     <div class="right-top frame-back-box">
       <h2 class="chart-title keypoint_part" @click="toKeyPointPage()">重点供应商在整个公司的占比堆积图</h2>
+      <div class="chart-unit-text">单位：万元</div>
       <div class="chart-box" id="all-view-right-top"></div>
     </div>
     <div class="right-bottom frame-back-box">
       <h2 class="chart-title">列账趋势分析图</h2>
+      <div class="chart-unit-text">单位：万元</div>
       <div class="chart-box" id="all-view-right-bottom"></div>
     </div>
     <userModalTable :isShowTabe="showTable" :type="tableType" @change="showStatusChange"></userModalTable>

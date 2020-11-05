@@ -1,6 +1,10 @@
 <template>
   <a-modal v-model:visible="show" wrapClassName="table-modal-list-box" width="75%">
-    <a-table :columns="columns" :data-source="data" :pagination="false" :scroll="{ y: 240 }" />
+    <a-table :columns="columns" :data-source="data" :pagination="false" :scroll="{ y: 240 }">
+      <template v-slot:redtext="{ text }">
+        <i class="red-text">{{ text }}</i>
+      </template>
+    </a-table>
   </a-modal>
 </template>
 
@@ -37,12 +41,12 @@ export default defineComponent({
       {
         title: '序号',
         dataIndex: 'xh',
-        width: 150
+        width: 50
       },
       {
         title: '供应商编码',
         dataIndex: 'gysbm',
-        width: 150
+        width: 120
       },
       {
         title: '供应商名称',
@@ -50,7 +54,8 @@ export default defineComponent({
       },
       {
         title: '法律诉讼',
-        dataIndex: 'flss'
+        dataIndex: 'flss',
+        slots: { customRender: 'redtext' }
       },
       {
         title: '失信信息',
@@ -69,12 +74,12 @@ export default defineComponent({
       {
         title: '序号',
         dataIndex: 'xh',
-        width: 150
+        width: 50
       },
       {
         title: '供应商编码',
         dataIndex: 'gysbm',
-        width: 150
+        width: 120
       },
       {
         title: '供应商名称',
@@ -105,12 +110,12 @@ export default defineComponent({
       {
         title: '序号',
         dataIndex: 'xh',
-        width: 150
+        width: 50
       },
       {
         title: '供应商编码',
         dataIndex: 'gysbm',
-        width: 150
+        width: 120
       },
       {
         title: '供应商名称',
@@ -122,7 +127,8 @@ export default defineComponent({
       },
       {
         title: '本年列账金额',
-        dataIndex: 'bnlzSum'
+        dataIndex: 'bnlzSum',
+        slots: { customRender: 'redtext' }
       },
       {
         title: '本年已付款金额',
@@ -135,25 +141,18 @@ export default defineComponent({
     ]
     const columns4: any = [
       {
-        title: '指标编码',
-        dataIndex: 'idxCde',
-        width: 150
-      },
-      {
         title: '指标名称',
         dataIndex: 'idxName'
       },
-      {
-        title: '指标口径说明',
-        dataIndex: 'idxExplain'
-      },
+
       {
         title: '分值',
         dataIndex: 'score'
       },
       {
         title: '实际得分',
-        dataIndex: 'actualScore'
+        dataIndex: 'actualScore',
+        slots: { customRender: 'redtext' }
       }
     ]
     //请求弹框内容
@@ -275,6 +274,16 @@ export default defineComponent({
   .ant-table-thead > tr > th,
   .ant-table-tbody > tr > td {
     padding: 10px 10px;
+    text-align: center;
+  }
+  .ant-table-tbody {
+    .red-text {
+      color: #ff4b72;
+    }
+  }
+  .ant-table-placeholder {
+    background-color: #177fd5;
+    border: none;
   }
 }
 </style>

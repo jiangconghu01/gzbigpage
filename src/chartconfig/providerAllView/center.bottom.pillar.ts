@@ -8,7 +8,7 @@ const option = {
     }
   },
   grid: {
-    top: '10%',
+    top: '30',
     left: '85',
     right: '5%',
     bottom: '18%'
@@ -59,6 +59,10 @@ const option = {
     {
       type: 'bar',
       barWidth: '40%',
+      label: {
+        show: true,
+        position: 'top'
+      },
       data: [2.5, 2.8, 3.7, 0.7, 1.9, 4.7, 4.2, 2.5, 6.4, 3.5]
     }
   ]

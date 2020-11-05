@@ -208,16 +208,17 @@ export default defineComponent({
   .center-title {
     width: 45%;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 12px;
     h1 {
-      color: rgb(0, 183, 255);
+      color: transparent;
+      -webkit-background-clip: text;
+      background-image: -webkit-linear-gradient(bottom, #00ffd5, #c1f0fa);
       cursor: pointer;
-      //   color: #4cefff;4cefff
-      //   color: #fff;
-      //   font-family: Georgia;
       font-size: 40px;
-      font-weight: bold;
-      animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+      font-weight: 900;
+      font-family: '黑体', '微软雅黑', '楷体';
+      //   text-shadow: 2px 2px 0px #46edff6e;
+      //   animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     }
   }
   .right-date {

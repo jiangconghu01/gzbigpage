@@ -3,17 +3,29 @@ import { chartFontStyle } from '../static'
 const option = {
   textStyle: chartFontStyle,
   tooltip: {
+    show: true,
     trigger: 'axis',
     axisPointer: {
       lineStyle: {
         color: '#96B2CC'
       }
+    },
+    formatter: function(param: any) {
+      console.log(param)
+      return `<div class="test_triangle_border">
+         <div class="popup">
+          <span><em></em></span>
+          <p class="name">${param[0].axisValueLabel}</p>
+          <p class="num">${param[0].value}</p>
+      </div>
+     </div>`
+      // return param.data.name + '\n{b|' + param.data.value * 100 + '%'
     }
   },
   grid: {
     top: '15%',
-    left: '85',
-    right: '5%',
+    left: '95',
+    right: '2%',
     bottom: '15%'
     // containLabel: true
   },
@@ -72,10 +84,10 @@ const option = {
       showAllSymbol: true,
       // symbol: 'image://./static/images/guang-circle.png',
       symbol: 'circle',
-      symbolSize: 25,
+      symbolSize: 16,
       lineStyle: {
         normal: {
-          color: '#6c50f3',
+          color: 'rgb(241, 218, 50)',
           shadowColor: 'rgba(0, 0, 0, .3)',
           shadowBlur: 0,
           shadowOffsetY: 5,
@@ -83,16 +95,13 @@ const option = {
         }
       },
       itemStyle: {
-        color: '#6c50f3',
+        color: 'rgb(241, 218, 50)',
         borderColor: '#fff',
-        borderWidth: 3,
-        shadowColor: 'rgba(0, 0, 0, .3)',
-        shadowBlur: 0,
-        shadowOffsetY: 2,
-        shadowOffsetX: 2
-      },
-      tooltip: {
-        show: false
+        borderWidth: 3
+        // shadowColor: 'rgba(0, 0, 0, .3)',
+        // shadowBlur: 0,
+        // shadowOffsetY: 2,
+        // shadowOffsetX: 2
       },
       areaStyle: {
         normal: {

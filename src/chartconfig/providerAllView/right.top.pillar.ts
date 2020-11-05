@@ -9,7 +9,7 @@ const option = {
   },
   legend: {
     top: 10,
-    right: 20,
+    left: 20,
     itemWidth: 15,
     itemHeight: 15,
     textStyle: {

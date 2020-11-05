@@ -26,7 +26,16 @@ const option = {
       roseType: 'radius',
       label: {
         show: true,
-        formatter: '{d}%'
+        color: '#fff',
+        formatter: function(param: any) {
+          return param.data.name.split('_')[1] + '\n{b|' + param.data.value * 100 + '%}'
+        },
+        // formatter: '{per|{d}%} \n {b|{b}}  ',
+        rich: {
+          b: {
+            color: '#4FFFE4'
+          }
+        }
       },
       emphasis: {
         label: {

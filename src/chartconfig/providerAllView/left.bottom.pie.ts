@@ -21,11 +21,20 @@ const option = {
     {
       name: '统计',
       type: 'pie',
-      radius: [70, 140],
+      radius: [60, 120],
       center: ['50%', '50%'],
       label: {
         show: true,
-        formatter: '{d}%'
+        color: '#fff',
+        formatter: function(param: any) {
+          return param.data.name + '\n{b|' + param.data.value * 100 + '%}'
+        },
+        // formatter: '{per|{d}%} \n {b|{b}}  ',
+        rich: {
+          b: {
+            color: '#4FFFE4'
+          }
+        }
       },
       emphasis: {
         label: {

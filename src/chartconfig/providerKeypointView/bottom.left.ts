@@ -2,15 +2,14 @@ import { chartFontStyle } from '../static'
 const option = {
   textStyle: chartFontStyle,
   title: {
-    text: '供应商业务类型',
+    text: '供应商\n业务类型',
     left: 'center',
-    top: '49%',
+    top: '41%',
     textStyle: {
-      fontSize: 13,
+      fontSize: 20,
       color: '#fff',
-      fontStyle: 'normal',
-      fontWeight: '400',
-      fontFamily: 'PingFangSC-Regular,PingFang SC;'
+      lineHeight: 32,
+      fontWeight: 'bold'
     }
   },
   grid: {
@@ -28,7 +27,7 @@ const option = {
     {
       name: '统计',
       type: 'pie',
-      radius: [50, 120],
+      radius: [60, 120],
       center: ['50%', '50%'],
       label: {
         show: true,
@@ -42,7 +41,7 @@ const option = {
           }
         },
         textStyle: {
-          fontSize: 14,
+          fontSize: 16,
           color: '#4FFFE4'
         },
         position: 'outside'

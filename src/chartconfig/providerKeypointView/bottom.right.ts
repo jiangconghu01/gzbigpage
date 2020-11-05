@@ -7,6 +7,21 @@ const option = {
       lineStyle: {
         color: '#96B2CC'
       }
+    },
+    formatter: function(param: any) {
+      console.log(param)
+      return `<div class="test_triangle_border">
+         <div class="popup">
+          <span><em></em></span>
+          <p class="name">${param[0].seriesName}</p>
+          <p class="num">${param[0].value}</p>
+          <p class="name">${param[1].seriesName}</p>
+          <p class="num">${param[1].value}</p>
+          <p class="name">${param[2].seriesName}</p>
+          <p class="num">${param[2].value}</p>
+      </div>
+     </div>`
+      // return param.data.name + '\n{b|' + param.data.value * 100 + '%'
     }
   },
   legend: {
