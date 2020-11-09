@@ -44,8 +44,8 @@
               ><i class="unit">亿</i></span
             >
             <span class="lum-2 active" @click="showModalTable('bill_num')"
-              ><i class="num">{{ labelItems[5] && (labelItems[5].idxValue / 10000).toFixed(0) }}</i
-              ><i class="unit">万</i></span
+              ><i class="num">{{ labelItems[5] && (labelItems[5].idxValue / 100000000).toFixed(3) }}</i
+              ><i class="unit">亿</i></span
             >
           </p>
         </li>
@@ -53,12 +53,12 @@
           <p class="text"><i>已付金额</i> <i>余额</i></p>
           <p class="number">
             <span class="lum-1"
-              ><i class="num">{{ labelItems[6] && (labelItems[6].idxValue / 10000).toFixed(1) }}</i
-              ><i class="unit">万</i></span
+              ><i class="num">{{ labelItems[6] && (labelItems[4].idxValue / 100000000).toFixed(3) }}</i
+              ><i class="unit">亿</i></span
             >
             <span class="lum-2"
-              ><i class="num">{{ labelItems[7] && (labelItems[7].idxValue / 10000).toFixed(1) }}</i
-              ><i class="unit">万</i></span
+              ><i class="num">{{ labelItems[7] && (labelItems[7].idxValue / 100000000).toFixed(3) }}</i
+              ><i class="unit">亿</i></span
             >
           </p>
         </li>

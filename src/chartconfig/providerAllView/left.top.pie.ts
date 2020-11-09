@@ -28,7 +28,7 @@ const option = {
         show: true,
         color: '#fff',
         formatter: function(param: any) {
-          return param.data.name.split('_')[1] + '\n{b|' + param.data.value * 100 + '%}'
+          return param.data.name + '\n{b|' + param.data.value * 100 + '%}'
         },
         // formatter: '{per|{d}%} \n {b|{b}}  ',
         rich: {

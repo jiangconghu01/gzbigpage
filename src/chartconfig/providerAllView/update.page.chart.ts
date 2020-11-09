@@ -215,7 +215,8 @@ const updateProviderAllView = async (_this: Record<string, any>) => {
 }
 //重点页面饼图加载，采用老的指标取值方式，所以写在第一个页面
 function updatePage2PieData() {
-  const date = '2020-07'
+  //   const date = '2020-07'
+  const date = store.state.selectDate
   const citycode = store.state.cityCode
   const businesstype = store.state.buniessType
   requestPostData<Record<string, string>, { data: ViewEEncodeRes[] }, unknown>(getEncode, { viewCode: '2002', chnlType: typeMap[businesstype] }).then((res) => {
