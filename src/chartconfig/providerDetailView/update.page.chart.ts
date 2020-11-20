@@ -76,7 +76,7 @@ function handleCenterLeft(resData: AxiosResponse<ResponseBody>, encodeList: Reco
     const data = resData.data.data ? resData.data.data.filter((ele) => ele.idxCode === val.idxCde) : []
     const data2 = data.map((e) => {
       const t: any = e
-      t.value = e.idxValue
+      t.value = (Number(e.idxValue) / 10000).toFixed(2)
       t.name = e.idxName
       return t
     })
@@ -110,7 +110,7 @@ function handleCenterRight(resData: AxiosResponse<ResponseBody>, encodeList: Rec
 function handleBottomLeft(resData: AxiosResponse<ResponseBody>, encodeList: Record<string, any>) {
   const config = pageChartsConfig.providerDetailView.child['detail-view-bottom-left']
   //   const encodes = encodeList['encode05'].data.data
-  const data = resData.data.data.map((val) => val.idxValue)
+  const data = resData.data.data.map((val) => (Number(val.idxValue) / 10000).toFixed(2))
   config.series[0].data = data
 }
 //处理bottom-right
@@ -123,10 +123,10 @@ function handleBottomRight(resData: AxiosResponse<ResponseBody>, encodeList: Rec
   const data2: Record<string, any>[] = []
   resData.data.data.forEach((val) => {
     if (val.idxCode === encode1) {
-      data1.push({ name: val.idxName, value: val.idxValue })
+      data1.push({ name: val.idxName, value: (Number(val.idxValue) / 10000).toFixed(2) })
     }
     if (val.idxCode === encode2) {
-      data2.push({ name: val.idxName, value: val.idxValue })
+      data2.push({ name: val.idxName, value: (Number(val.idxValue) / 10000).toFixed(2) })
     }
   })
   config.series[0].data = data1

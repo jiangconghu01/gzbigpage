@@ -8,7 +8,7 @@
       </div>
       <div class="top-right frame-back-box">
         <h2 class="chart-title">信用信息分布情况统计图</h2>
-        <div class="chart-unit-text">单位：万元</div>
+        <div class="chart-unit-text">单位：个</div>
         <div class="chart-box" id="keypoint-view-top-right"></div>
       </div>
     </div>

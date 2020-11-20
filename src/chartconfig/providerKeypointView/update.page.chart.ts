@@ -58,21 +58,21 @@ function handleLeftTopChart(resData: AxiosResponse<ResponseBody>, providerList: 
   const series1Data = series1.data.filter((val: any) => val.idxCode === 'ZDGYS_0001')
   config.series[0].data = series1Data.map((val: any) => {
     val.name = val.gysjc
-    val.value = val.idxValue
+    val.value = (Number(val.idxValue) / 10000).toFixed(2)
     return val
   })
   const series2: any = resData.data
   const series2Data = series2.data.filter((val: any) => val.idxCode === 'ZDGYS_0002')
   config.series[1].data = series2Data.map((val: any) => {
     val.name = val.gysjc
-    val.value = val.idxValue
+    val.value = (Number(val.idxValue) / 10000).toFixed(2)
     return val
   })
   const series3: any = resData.data
   const series3Data = series3.data.filter((val: any) => val.idxCode === 'ZDGYS_0003')
   config.series[2].data = series3Data.map((val: any) => {
     val.name = val.gysjc
-    val.value = val.idxValue
+    val.value = (Number(val.idxValue) / 10000).toFixed(2)
     return val
   })
   //纵坐标对应的serice数据
@@ -184,19 +184,19 @@ function handleBtRightChart(resData: AxiosResponse<ResponseBody>, providerList: 
   const series1Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0017')
   config.series[0].data = series1Data.map((val: any) => {
     val.name = val.gysjc
-    val.value = val.idxValue
+    val.value = (Number(val.idxValue) / 1000000).toFixed(3)
     return val
   })
   const series2Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0018')
   config.series[1].data = series2Data.map((val: any) => {
     val.name = val.gysjc
-    val.value = val.idxValue
+    val.value = (Number(val.idxValue) / 1000000).toFixed(3)
     return val
   })
   const series3Data = resData.data.data.filter((val: any) => val.idxCode === 'ZDGYS_0019')
   config.series[2].data = series3Data.map((val: any) => {
     val.name = val.gysjc
-    val.value = val.idxValue
+    val.value = (Number(val.idxValue) / 1000000).toFixed(3)
     return val
   })
 }

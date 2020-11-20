@@ -1,6 +1,6 @@
 import { chartFontStyle } from '../static'
 const option = {
-  textStyle: chartFontStyle,
+  textStyle: { ...chartFontStyle, color: '#fff' },
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -21,13 +21,14 @@ const option = {
   grid: {
     left: '3%',
     right: '4%',
-    bottom: '3%',
+    bottom: 45,
     containLabel: true
   },
   xAxis: {
     triggerEvent: true,
     axisLabel: {
       interval: 0, //强制显示文字
+      rotate: 30,
       color: '#398FD1',
       fontSize: 16
     },
@@ -78,7 +79,7 @@ const option = {
       }
     }
   ],
-  color: ['#16D4D2', '#F2DA32', '#58ABF1', '#6A50FF', '#D55CE7', 'red', 'blue', 'grey', 'yellow', 'green'],
+  color: ['#16D4D2', '#F2DA32', '#58ABF1', '#6A50FF', '#D55CE7', '#ff5100', '#0066ff', '#b9acac', '#e5e91b', '#6fd21e'],
   series: [
     {
       name: '公开招标',

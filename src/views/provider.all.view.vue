@@ -27,7 +27,7 @@
           <p class="text"><i>新签合同额</i> <i>需关注合同</i></p>
           <p class="number">
             <span class="lum-1"
-              ><i class="num">{{ labelItems[2] && (labelItems[2].idxValue / 10000).toFixed(1) }}</i
+              ><i class="num">{{ labelItems[2] && (labelItems[2].idxValue / 100000000).toFixed(3) }}</i
               ><i class="unit">万</i></span
             >
             <span class="lum-2 active" @click="showModalTable('contract_num')"

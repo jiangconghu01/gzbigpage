@@ -38,7 +38,7 @@ interface ResData {
   rptType?: string
   accountCode: string
   periodDate: string
-  idxValue?: string
+  idxValue?: string | number
   idxName?: string
   idxOrd?: string
 }
@@ -75,9 +75,9 @@ function handleRightTopChart(resData: AxiosResponse<ResponseBody>, pageAllviewEn
   const y: string[] = []
   resData.data.data.map((val: ResData, index) => {
     if (Number(val.idxOrd) % 2 !== 0) {
-      x.push(val.idxValue as string)
+      x.push(((val.idxValue as number) / 10000).toFixed(2))
     } else {
-      y.push(val.idxValue as string)
+      y.push(((val.idxValue as number) / 10000).toFixed(2))
     }
   })
   config.series[0].data = x
@@ -101,7 +101,7 @@ function handleCenterBottomChart(resData: AxiosResponse<ResponseBody>, pageAllvi
   config.series[0].data = resData.data.data.map((val: ResData, index) => {
     return {
       name: label[index],
-      value: val.idxValue
+      value: (Number(val.idxValue) / 10000).toFixed(2)
     }
   })
 }
@@ -112,7 +112,7 @@ function handleRightBottomChart(resData: AxiosResponse<ResponseBody>, pageAllvie
   config.series[0].data = resData.data.data.map((val: ResData, index) => {
     return {
       name: label[index],
-      value: val.idxValue
+      value: (Number(val.idxValue) / 10000).toFixed(2)
     }
   })
 }

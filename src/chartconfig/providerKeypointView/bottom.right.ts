@@ -38,12 +38,13 @@ const option = {
   grid: {
     left: '3%',
     right: '4%',
-    bottom: '3%',
+    bottom: 45,
     containLabel: true
   },
   xAxis: {
     axisLabel: {
       interval: 0, //强制显示文字
+      rotate: 30,
       color: '#398FD1',
       fontSize: 16
     },
